@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		29430FEE28E8920700BD8550 /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29430FED28E8920700BD8550 /* FeedViewController.swift */; };
+		29430FF028E8921300BD8550 /* UploadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29430FEF28E8921300BD8550 /* UploadViewController.swift */; };
+		29430FF228E8922200BD8550 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29430FF128E8922200BD8550 /* SettingsViewController.swift */; };
 		296AAB6928E2EE2C00F0F499 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296AAB6828E2EE2C00F0F499 /* AppDelegate.swift */; };
 		296AAB6B28E2EE2C00F0F499 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296AAB6A28E2EE2C00F0F499 /* SceneDelegate.swift */; };
 		296AAB6D28E2EE2C00F0F499 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296AAB6C28E2EE2C00F0F499 /* ViewController.swift */; };
@@ -24,6 +27,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		29430FED28E8920700BD8550 /* FeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
+		29430FEF28E8921300BD8550 /* UploadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadViewController.swift; sourceTree = "<group>"; };
+		29430FF128E8922200BD8550 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		296AAB6528E2EE2C00F0F499 /* InstaCloneFirebase.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InstaCloneFirebase.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		296AAB6828E2EE2C00F0F499 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		296AAB6A28E2EE2C00F0F499 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -80,6 +86,9 @@
 				296AAB7128E2EE2E00F0F499 /* Assets.xcassets */,
 				296AAB7328E2EE2E00F0F499 /* LaunchScreen.storyboard */,
 				296AAB7628E2EE2E00F0F499 /* Info.plist */,
+				29430FED28E8920700BD8550 /* FeedViewController.swift */,
+				29430FEF28E8921300BD8550 /* UploadViewController.swift */,
+				29430FF128E8922200BD8550 /* SettingsViewController.swift */,
 			);
 			path = InstaCloneFirebase;
 			sourceTree = "<group>";
@@ -169,8 +178,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				296AAB6D28E2EE2C00F0F499 /* ViewController.swift in Sources */,
+				29430FF028E8921300BD8550 /* UploadViewController.swift in Sources */,
 				296AAB6928E2EE2C00F0F499 /* AppDelegate.swift in Sources */,
+				29430FEE28E8920700BD8550 /* FeedViewController.swift in Sources */,
 				296AAB6B28E2EE2C00F0F499 /* SceneDelegate.swift in Sources */,
+				29430FF228E8922200BD8550 /* SettingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
