@@ -5,12 +5,16 @@
 //  Created by kz on 01/10/2022.
 //
 
+
 import UIKit
+import Firebase
 
 class FeedViewController: UIViewController {
 
+    @IBOutlet weak var nameText: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
+        nameText.text = Auth.auth().currentUser?.email
 
         // Do any additional setup after loading the view.
     }

@@ -93,7 +93,7 @@
                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="comment" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="b6u-Nr-kN2">
                                 <rect key="frame" x="78" y="454" width="235" height="34"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="34" id="jvR-Dp-SIp"/>
+                                    <constraint firstAttribute="height" constant="34" id="pDX-cX-Otu"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
@@ -115,14 +115,14 @@
                         <constraints>
                             <constraint firstItem="Qiq-Lh-m9s" firstAttribute="leading" secondItem="Szu-JO-t34" secondAttribute="leading" constant="61" id="6Gr-ei-VCX"/>
                             <constraint firstItem="Szu-JO-t34" firstAttribute="bottom" secondItem="twM-GG-OFj" secondAttribute="bottom" constant="171" id="8H6-bq-kyt"/>
+                            <constraint firstItem="twM-GG-OFj" firstAttribute="top" secondItem="b6u-Nr-kN2" secondAttribute="bottom" constant="46" id="A4A-1A-MCv"/>
                             <constraint firstItem="Szu-JO-t34" firstAttribute="trailing" secondItem="Qiq-Lh-m9s" secondAttribute="trailing" constant="55" id="CA3-Hg-zAR"/>
-                            <constraint firstItem="b6u-Nr-kN2" firstAttribute="top" secondItem="Qiq-Lh-m9s" secondAttribute="bottom" constant="64" id="Dfc-BH-dXA"/>
-                            <constraint firstItem="twM-GG-OFj" firstAttribute="top" secondItem="b6u-Nr-kN2" secondAttribute="bottom" constant="46" id="SaH-n5-het"/>
+                            <constraint firstItem="b6u-Nr-kN2" firstAttribute="centerX" secondItem="eDM-oj-A0N" secondAttribute="centerX" id="ac7-62-N8L"/>
                             <constraint firstItem="Qiq-Lh-m9s" firstAttribute="top" secondItem="Szu-JO-t34" secondAttribute="top" constant="82" id="bAa-9s-LBE"/>
-                            <constraint firstItem="b6u-Nr-kN2" firstAttribute="leading" secondItem="Szu-JO-t34" secondAttribute="leading" constant="78" id="iLg-yG-dOr"/>
+                            <constraint firstItem="b6u-Nr-kN2" firstAttribute="leading" secondItem="Szu-JO-t34" secondAttribute="leading" constant="78" id="daJ-1D-TG8"/>
                             <constraint firstItem="Szu-JO-t34" firstAttribute="trailing" secondItem="twM-GG-OFj" secondAttribute="trailing" constant="152" id="kZn-68-Hqm"/>
                             <constraint firstItem="twM-GG-OFj" firstAttribute="leading" secondItem="Szu-JO-t34" secondAttribute="leading" constant="135" id="kza-pK-Udw"/>
-                            <constraint firstItem="b6u-Nr-kN2" firstAttribute="centerX" secondItem="eDM-oj-A0N" secondAttribute="centerX" id="nSF-AL-7v8"/>
+                            <constraint firstItem="b6u-Nr-kN2" firstAttribute="top" secondItem="Qiq-Lh-m9s" secondAttribute="bottom" constant="64" id="lb3-q0-XQY"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Add" image="plus" catalog="system" id="ZXB-I4-JYV"/>
@@ -181,7 +181,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gfh-mm-vz9">
-                                <rect key="frame" x="174" y="227" width="42" height="21"/>
+                                <rect key="frame" x="98" y="229" width="222" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
@@ -194,10 +194,13 @@
                     <tabBarItem key="tabBarItem" title="Feed" id="SGR-5V-iqp">
                         <imageReference key="image" image="f.circle.fill" catalog="system" symbolScale="large"/>
                     </tabBarItem>
+                    <connections>
+                        <outlet property="nameText" destination="Gfh-mm-vz9" id="ge9-nb-9Bf"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="duk-WO-tux" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="723" y="-756"/>
+            <point key="canvasLocation" x="721.53846153846155" y="-756.39810426540282"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="3wE-UF-FUb">
