@@ -28,6 +28,9 @@ class ViewController: UIViewController {
                 
             }
         }
+        else{
+            makeAlert(titleInput: "Error", messageInput: "Fields cannot be empty!")
+        }
         }
     
     
@@ -43,7 +46,7 @@ class ViewController: UIViewController {
             }
         }
         else{
-            makeAlert(titleInput: "Error", messageInput: "Username/Password")
+            makeAlert(titleInput: "Error", messageInput: "Fields cannot be empty!")
         }
 
     }
