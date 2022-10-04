@@ -15,6 +15,7 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var passwordText: UITextField!
     
+    @IBOutlet weak var usernameText: UITextField!
     
     @IBAction func signInClicked(_ sender: Any) {
         if(emailText.text != "" && passwordText.text != ""){
@@ -41,7 +42,24 @@ class ViewController: UIViewController {
                     self.makeAlert(titleInput: "Error", messageInput: error?.localizedDescription ?? "Error")
                     
                 } else{
-                    self.performSegue(withIdentifier: "toFeedVC", sender: nil)
+                    
+                    let firestoreDatabase = Firebase.Firestore.firestore()
+                    var firestoreReference : DocumentReference? = nil
+                    let firestorePost = ["username" : self.usernameText!]  as [String : Any]
+                    
+                    //firestoreReference = firestoreDatabase.collection("Users").co
+                    //TODO: input 2 other fields to usenrame uid 
+                    firestoreReference = firestoreDatabase.collection("Users").addDocument(data: firestorePost, completion: { (error) in
+                        if error != nil {
+                            self.makeAlert(titleInput: "Error", messageInput: error?.localizedDescription ?? "Error")
+                        }
+                        else{
+                            self.performSegue(withIdentifier: "toFeedVC", sender: nil)
+                            self.makeAlert(titleInput: "DONE", messageInput: "  ")
+
+                        }
+                    })
+                    //self.performSegue(withIdentifier: "toFeedVC", sender: nil)
                 }
             }
         }
