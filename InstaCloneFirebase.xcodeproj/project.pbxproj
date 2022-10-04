@@ -24,6 +24,7 @@
 		296AAB8828E2F1BB00F0F499 /* FirebaseFirestoreCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 296AAB8728E2F1BB00F0F499 /* FirebaseFirestoreCombine-Community */; };
 		296AAB8A28E2F1BB00F0F499 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 296AAB8928E2F1BB00F0F499 /* FirebaseStorage */; };
 		296AAB8C28E2F1BB00F0F499 /* FirebaseStorageCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 296AAB8B28E2F1BB00F0F499 /* FirebaseStorageCombine-Community */; };
+		29B58A0E28EC9A9A00BF2459 /* FeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B58A0D28EC9A9A00BF2459 /* FeedCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,8 +38,9 @@
 		296AAB6F28E2EE2C00F0F499 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		296AAB7128E2EE2E00F0F499 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		296AAB7428E2EE2E00F0F499 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		296AAB7628E2EE2E00F0F499 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		296AAB7C28E2F00100F0F499 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		29B58A0928EC960500BF2459 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		29B58A0D28EC9A9A00BF2459 /* FeedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,10 +87,11 @@
 				296AAB6E28E2EE2C00F0F499 /* Main.storyboard */,
 				296AAB7128E2EE2E00F0F499 /* Assets.xcassets */,
 				296AAB7328E2EE2E00F0F499 /* LaunchScreen.storyboard */,
-				296AAB7628E2EE2E00F0F499 /* Info.plist */,
 				29430FED28E8920700BD8550 /* FeedViewController.swift */,
 				29430FEF28E8921300BD8550 /* UploadViewController.swift */,
 				29430FF128E8922200BD8550 /* SettingsViewController.swift */,
+				29B58A0928EC960500BF2459 /* Info.plist */,
+				29B58A0D28EC9A9A00BF2459 /* FeedCell.swift */,
 			);
 			path = InstaCloneFirebase;
 			sourceTree = "<group>";
@@ -177,6 +180,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				29B58A0E28EC9A9A00BF2459 /* FeedCell.swift in Sources */,
 				296AAB6D28E2EE2C00F0F499 /* ViewController.swift in Sources */,
 				29430FF028E8921300BD8550 /* UploadViewController.swift in Sources */,
 				296AAB6928E2EE2C00F0F499 /* AppDelegate.swift in Sources */,
