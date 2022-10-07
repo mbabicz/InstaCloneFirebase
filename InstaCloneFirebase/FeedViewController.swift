@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 import SDWebImage
-
+ 
 class FeedViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var tableView: UITableView!
@@ -87,7 +87,7 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
         cell.likeLabel.text = String(likeArray[indexPath.row])
         cell.commentLabel.text = userCommentArray[indexPath.row]
         cell.usernameLabel.text = userEmailArray[indexPath.row]
-        cell.userImageView.image.sd_setImage(with:URL(string: self.userImageArray[indexPath.row]))
+        cell.userImageView.sd_setImage(with:URL(string: self.userImageArray[indexPath.row]))
         return cell
     }
 
