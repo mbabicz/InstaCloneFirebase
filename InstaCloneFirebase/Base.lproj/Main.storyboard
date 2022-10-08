@@ -4,7 +4,6 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
         <capability name="Image references" minToolsVersion="12.0"/>
-        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -248,8 +247,15 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Mm-0h-7IY">
+                                                    <rect key="frame" x="316" y="-12" width="42" height="57"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
-                                            <color key="backgroundColor" name="AccentColor"/>
+                                            <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstItem="IMj-uq-rcC" firstAttribute="bottom" secondItem="reI-ax-uqk" secondAttribute="bottom" id="CyC-YO-3MI"/>
                                                 <constraint firstItem="IMj-uq-rcC" firstAttribute="top" secondItem="reI-ax-uqk" secondAttribute="top" id="Fsx-I1-keN"/>
@@ -267,6 +273,7 @@
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="commentLabel" destination="UhY-wT-brK" id="mcH-cP-n71"/>
+                                            <outlet property="documentIdLabel" destination="7Mm-0h-7IY" id="THL-t0-k5v"/>
                                             <outlet property="likeLabel" destination="reI-ax-uqk" id="1no-8U-slt"/>
                                             <outlet property="userImageView" destination="Zvm-bQ-sPv" id="pdx-1y-xvS"/>
                                             <outlet property="usernameLabel" destination="ifk-br-gCm" id="25J-H6-Sho"/>
@@ -321,9 +328,6 @@
         <image name="plus" catalog="system" width="128" height="113"/>
         <image name="s.circle.fill" catalog="system" width="128" height="123"/>
         <image name="select" width="158" height="130"/>
-        <namedColor name="AccentColor">
-            <color red="1" green="0.79199999570846558" blue="0.15700000524520874" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
