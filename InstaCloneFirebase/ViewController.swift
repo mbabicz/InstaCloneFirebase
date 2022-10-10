@@ -14,9 +14,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var emailText: UITextField!
     
     @IBOutlet weak var passwordText: UITextField!
-    
-    @IBOutlet weak var usernameText: UITextField!
-    
+        
     @IBAction func signInClicked(_ sender: Any) {
         if(emailText.text != "" && passwordText.text != ""){
             Auth.auth().signIn(withEmail: emailText.text!, password: passwordText.text!) { (authData, error) in
@@ -31,49 +29,12 @@ class ViewController: UIViewController {
         }
         else{
             makeAlert(titleInput: "Error", messageInput: "Fields cannot be empty!")
-        }xc
         }
+    }
     
     
     @IBAction func signUpClicked(_ sender: Any) {
-        if(emailText.text != "" && passwordText.text != "" && usernameText.text != ""){
-            
-            //check username
-            
-            Auth.auth().createUser(withEmail: emailText.text!, password: passwordText.text!) { (authdata, error) in
-                if(error != nil){
-                    self.makeAlert(titleInput: "Error", messageInput: error?.localizedDescription ?? "Error")
-                    
-                } else{
-                    
-                    let userID = Auth.auth().currentUser!.uid
-                    print(userID)
-                    let firestoreDatabase = Firebase.Firestore.firestore()
-                    var firestoreReference : DocumentReference? = nil
-                    //let firestorePost = ["username" : self.usernameText.text!, "email" : //self.emailText.text!, "date" : FieldValue.serverTimestamp()]  as [String : Any]
-                    
-                    firestoreDatabase.collection("Users").document(userID).setData([
-                        "username" : self.usernameText.text!,
-                        "email" : self.emailText.text!,
-                        "date of registration" : FieldValue.serverTimestamp()
-                    
-                    ]){ err in
-                        if err != nil{
-                            //error
-                            self.makeAlert(titleInput: "Error", messageInput: error?.localizedDescription ?? "Error")
-                        } else{
-                            self.performSegue(withIdentifier: "toFeedVC", sender: nil)
-                            self.makeAlert(titleInput: "DONE", messageInput: " ")
-                        }
-                        
-                    }
-                    
-                }
-            }
-        }
-        else{
-            makeAlert(titleInput: "Error", messageInput: "Fields cannot be empty!")
-        }
+        self.performSegue(withIdentifier: "toSignUpVC", sender: nil)
 
     }
     
