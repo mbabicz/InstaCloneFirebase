@@ -68,16 +68,6 @@ class ViewController: UIViewController {
                         
                     }
                     
-//                    firestoreReference = firestoreDatabase.collection("Users").addDocument(data: firestorePost, completion: { (error) in
-//                        if error != nil {
-//                            self.makeAlert(titleInput: "Error", messageInput: error?.localizedDescription ?? "Error")
-//                        }
-//                        else{
-//                            self.performSegue(withIdentifier: "toFeedVC", sender: nil)
-//                            self.makeAlert(titleInput: "DONE", messageInput: " ")
-//
-//                        }
-//                    })
                 }
             }
         }
