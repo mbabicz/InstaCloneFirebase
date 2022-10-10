@@ -36,13 +36,48 @@ class ViewController: UIViewController {
     
     
     @IBAction func signUpClicked(_ sender: Any) {
-        if(emailText.text != "" && passwordText.text != ""){
+        if(emailText.text != "" && passwordText.text != "" && usernameText.text != ""){
+            
+            //check username
+            
             Auth.auth().createUser(withEmail: emailText.text!, password: passwordText.text!) { (authdata, error) in
                 if(error != nil){
                     self.makeAlert(titleInput: "Error", messageInput: error?.localizedDescription ?? "Error")
                     
                 } else{
-                    self.performSegue(withIdentifier: "toFeedVC", sender: nil)
+                    
+                    let userID = Auth.auth().currentUser!.uid
+                    print(userID)
+                    let firestoreDatabase = Firebase.Firestore.firestore()
+                    var firestoreReference : DocumentReference? = nil
+                    //let firestorePost = ["username" : self.usernameText.text!, "email" : //self.emailText.text!, "date" : FieldValue.serverTimestamp()]  as [String : Any]
+                    
+                    firestoreDatabase.collection("Users").document(userID).setData([
+                        "username" : self.usernameText.text!,
+                        "email" : self.emailText.text!,
+                        "date of registration" : FieldValue.serverTimestamp()
+                    
+                    ]){ err in
+                        if err != nil{
+                            //error
+                            self.makeAlert(titleInput: "Error", messageInput: error?.localizedDescription ?? "Error")
+                        } else{
+                            self.performSegue(withIdentifier: "toFeedVC", sender: nil)
+                            self.makeAlert(titleInput: "DONE", messageInput: " ")
+                        }
+                        
+                    }
+                    
+//                    firestoreReference = firestoreDatabase.collection("Users").addDocument(data: firestorePost, completion: { (error) in
+//                        if error != nil {
+//                            self.makeAlert(titleInput: "Error", messageInput: error?.localizedDescription ?? "Error")
+//                        }
+//                        else{
+//                            self.performSegue(withIdentifier: "toFeedVC", sender: nil)
+//                            self.makeAlert(titleInput: "DONE", messageInput: " ")
+//
+//                        }
+//                    })
                 }
             }
         }

@@ -62,21 +62,47 @@ class UploadViewController: UIViewController, UIImagePickerControllerDelegate, U
                             
                             //DATABASE
                             
+                            //temp:
+                            //Auth.auth().currentUser!.email!,
+                            
                             let firestoreDatabase = Firebase.Firestore.firestore()
                             var firestoreReference : DocumentReference? = nil
-                            let firestorePost = ["imageUrl" : imageUrl!, "postedBy" : Auth.auth().currentUser!.email!, "commentText" : self.commentText.text!, "date" : FieldValue.serverTimestamp(), "likes" : 0] as [String : Any]
                             
-                            firestoreReference = firestoreDatabase.collection("Posts").addDocument(data: firestorePost, completion: { (error) in
-                                if error != nil {
-                                    self.makeAlert(titleInput: "Error", messageInput: error?.localizedDescription ?? "Error")
+                            var username = ""
+                            
+                            let userID = Auth.auth().currentUser?.uid
+                            
+                            let docRef = firestoreDatabase.collection("Users").document(userID ?? "")
+                            
+                            docRef.getDocument { (document, error) in
+                                guard let document = document, document.exists else{
+                                    print("doc does not exist")
+                                    return
                                 }
-                                else {
-                                    self.selectImage.image = UIImage(named: "select.png")
-                                    self.commentText.text = ""
-                                    self.tabBarController?.selectedIndex = 0
-                                    self.makeAlert(titleInput: "DONE!", messageInput: " ")
-                                }
-                            })
+                                let dataDescription = document.data()
+                                print(dataDescription?["username"] as! String)
+                                username = dataDescription?["username"] as! String
+                                
+                                let firestorePost = ["imageUrl" : imageUrl!, "postedBy" :  username, "commentText" : self.commentText.text!, "date" : FieldValue.serverTimestamp(), "likes" : 0] as [String : Any]
+                                
+                                firestoreReference = firestoreDatabase.collection("Posts").addDocument(data: firestorePost, completion: { (error) in
+                                    if error != nil {
+                                        self.makeAlert(titleInput: "Error", messageInput: error?.localizedDescription ?? "Error")
+                                    }
+                                    else {
+                                        self.selectImage.image = UIImage(named: "select.png")
+                                        self.commentText.text = ""
+                                        self.tabBarController?.selectedIndex = 0
+                                        self.makeAlert(titleInput: "DONE!", messageInput: " ")
+                                    }
+                                })
+                                
+                            }
+                            
+                            
+                            
+                            
+  
 
                         }
                         
