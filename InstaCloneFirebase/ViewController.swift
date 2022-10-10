@@ -31,7 +31,7 @@ class ViewController: UIViewController {
         }
         else{
             makeAlert(titleInput: "Error", messageInput: "Fields cannot be empty!")
-        }
+        }xc
         }
     
     
