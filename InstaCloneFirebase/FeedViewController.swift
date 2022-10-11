@@ -61,22 +61,40 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
                         if let postComment = document.get("commentText") as? String{
                             self.userCommentArray.append(postComment)
                         }
-                        if let likes = document.get("likes") as? Int{
-                            self.likeArray.append(likes)
-                        }
+//                        if let likes = document.get("likes") as? Int{
+//                            self.likeArray.append(likes)
+//                        }
                         if let imageUrl = document.get("imageUrl") as? String{
                             self.userImageArray.append(imageUrl)
                         }
                         
+                        
+                        let docRef = fireStoreDatabase.collection("Posts").document(documentID).collection("Likes").addSnapshotListener{ (snapshot, error) in
+                        if error != nil{
+                            print(error?.localizedDescription)
+                            
+                        }
+                        else{
+                            if(snapshot?.isEmpty != true && snapshot != nil){
+                                
+                                var count = 0
+                                for document in snapshot!.documents{
+                                    count += 1
+                                }
+                                self.likeArray.append(count)
+                            }
+                            else{
+                                self.likeArray.append(0)
+                            }
+                        }
                     }
-                    
+                        
+
+                        
+                    }
                     self.tableView.reloadData()
                 }
             }
-            
-            
-            
-            
         }
     }
     
@@ -86,7 +104,7 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! FeedCell
-        cell.likeLabel.text = String(likeArray[indexPath.row])
+        cell.likeLabel.text = "Polubienia: \(String(likeArray[indexPath.row]))"
         cell.commentLabel.text = userCommentArray[indexPath.row]
         cell.usernameLabel.text = userEmailArray[indexPath.row]
         cell.userImageView.sd_setImage(with:URL(string: self.userImageArray[indexPath.row]))
