@@ -7,6 +7,8 @@
 
 import UIKit
 import Firebase
+import FirebaseStorage
+import FirebaseFirestore
 
 class FeedCell: UITableViewCell {
 
@@ -22,12 +24,36 @@ class FeedCell: UITableViewCell {
     @IBOutlet weak var documentIdLabel: UILabel!
     
     @IBAction func likeButton(_ sender: Any) {
+        
+//        let fireStoreDatabase = Firestore.firestore()
+//        if let likeCount = Int(likeLabel.text!){
+//            let likeStore = ["likes" : likeCount + 1] as [String : Any]
+//
+//            fireStoreDatabase.collection("Posts").document(documentIdLabel.text!).setData(likeStore, merge: true)
+//        }
+        
         let fireStoreDatabase = Firestore.firestore()
-        if let likeCount = Int(likeLabel.text!){
-            let likeStore = ["likes" : likeCount + 1] as [String : Any]
-            
-            fireStoreDatabase.collection("Posts").document(documentIdLabel.text!).setData(likeStore, merge: true)
+        let userID = Auth.auth().currentUser!.uid
+        var username = ""
+        let docRef = fireStoreDatabase.collection("Users").document(userID ?? "")
+        
+        docRef.getDocument { (document, error) in
+            guard let document = document, document.exists else{
+                print("doc does not exist")
+                return
+            }
+            let dataDescription = document.data()
+            print(dataDescription?["username"] as! String)
+            username = dataDescription?["username"] as! String
         }
+            
+            //dodaj usera do listy z userid
+            fireStoreDatabase.collection("Posts").document(self.documentIdLabel.text!).collection("Likes").document(userID).setData([
+                "likedBy" : username,
+                "likedByUID" : userID,
+                "date of like" : FieldValue.serverTimestamp()
+            ])
+        
     }
     override func awakeFromNib() {
         super.awakeFromNib()
