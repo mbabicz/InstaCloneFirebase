@@ -80,9 +80,7 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! FeedCell
-        //cell.likeLabel.text = "Polubienia: \(String(likeArray[indexPath.row]))"
         cell.likeLabel.text = String(likeArray[indexPath.row])
-        
         cell.commentLabel.text = userCommentArray[indexPath.row]
         cell.usernameLabel.text = userEmailArray[indexPath.row]
         cell.userImageView.sd_setImage(with:URL(string: self.userImageArray[indexPath.row]))

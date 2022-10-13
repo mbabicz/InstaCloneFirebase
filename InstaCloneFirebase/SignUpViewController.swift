@@ -17,8 +17,6 @@ class SignUpViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
     }
     
     
@@ -26,7 +24,6 @@ class SignUpViewController: UIViewController {
         if(emailText.text != "" && passwordText.text != "" && usernameText.text != ""){
             
             //check username
-            
             Auth.auth().createUser(withEmail: emailText.text!, password: passwordText.text!) { (authdata, error) in
                 if(error != nil){
                     self.makeAlert(titleInput: "Error", messageInput: error?.localizedDescription ?? "Error")
@@ -51,9 +48,7 @@ class SignUpViewController: UIViewController {
                             self.performSegue(withIdentifier: "toFeedVC", sender: nil)
                             self.makeAlert(titleInput: "DONE", messageInput: " ")
                         }
-                        
                     }
-                    
                 }
             }
         }
@@ -65,7 +60,6 @@ class SignUpViewController: UIViewController {
 
     @IBAction func signInButton(_ sender: Any) {
         self.performSegue(withIdentifier: "toViewController", sender: nil)
-        
     }
     
     

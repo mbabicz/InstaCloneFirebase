@@ -12,8 +12,12 @@ import FirebaseAuth
 class ViewController: UIViewController {
     
     @IBOutlet weak var emailText: UITextField!
-    
     @IBOutlet weak var passwordText: UITextField!
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // Do any additional setup after loading the view.
+    }
         
     @IBAction func signInClicked(_ sender: Any) {
         if(emailText.text != "" && passwordText.text != ""){
@@ -23,8 +27,7 @@ class ViewController: UIViewController {
                 } else {
                     self.performSegue(withIdentifier: "toFeedVC", sender: nil)
 
-                }
-                
+                } 
             }
         }
         else{
@@ -35,13 +38,6 @@ class ViewController: UIViewController {
     
     @IBAction func signUpClicked(_ sender: Any) {
         self.performSegue(withIdentifier: "toSignUpVC", sender: nil)
-
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view.
-        
 
     }
     

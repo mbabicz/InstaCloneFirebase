@@ -13,9 +13,7 @@ import FirebaseFirestore
 class UploadViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     @IBOutlet weak var selectImage: UIImageView!
-    
     @IBOutlet weak var commentText: UITextField!
-    
     @IBOutlet weak var uploadButton: UIButton!
     
     override func viewDidLoad() {
@@ -62,13 +60,10 @@ class UploadViewController: UIViewController, UIImagePickerControllerDelegate, U
                             
                             //DATABASE
                             
-                            //temp:
-                            //Auth.auth().currentUser!.email!,
-                            
                             let firestoreDatabase = Firebase.Firestore.firestore()
                             var firestoreReference : DocumentReference? = nil
                             
-                            var username = ""
+                            var username = String()
                             
                             let userID = Auth.auth().currentUser?.uid
                             
@@ -98,15 +93,7 @@ class UploadViewController: UIViewController, UIImagePickerControllerDelegate, U
                                 })
                                 
                             }
-                            
-                            
-                            
-                            
-  
-
                         }
-                        
-    
                     }
                 }
             }
