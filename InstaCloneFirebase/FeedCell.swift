@@ -25,36 +25,56 @@ class FeedCell: UITableViewCell {
     
     @IBAction func likeButton(_ sender: Any) {
         
-//        let fireStoreDatabase = Firestore.firestore()
-//        if let likeCount = Int(likeLabel.text!){
-//            let likeStore = ["likes" : likeCount + 1] as [String : Any]
-//
-//            fireStoreDatabase.collection("Posts").document(documentIdLabel.text!).setData(likeStore, merge: true)
-//        }
-        
         let fireStoreDatabase = Firestore.firestore()
         let userID = Auth.auth().currentUser!.uid
-        var username = ""
-        let docRef = fireStoreDatabase.collection("Users").document(userID ?? "")
         
-        docRef.getDocument { (document, error) in
-            guard let document = document, document.exists else{
-                print("doc does not exist")
-                return
+        let ref = fireStoreDatabase.collection("Posts").document(self.documentIdLabel.text!).collection("Likes").document(userID)
+        
+        //checking if user has already liked this post
+        ref.getDocument { document, error in
+            if (document?.exists)! {
+                print("like exists")
+                ref.delete() { err in
+                    if let err = err {
+                        print("can't delete like, error: \(err)")
+                    } else{
+                        print("like deleted successfully")
+                        //counting likes
+                        if let likeCount = Int(self.likeLabel.text!){
+                            let likeStore = ["likes" : likeCount - 1] as [String : Any]
+                            fireStoreDatabase.collection("Posts").document(self.documentIdLabel.text!).setData(likeStore, merge: true)
+                        }
+                    }
+                }
             }
-            let dataDescription = document.data()
-            print(dataDescription?["username"] as! String)
-            username = dataDescription?["username"] as! String
+            else{
+                //* giving like
+                //getting username
+                var username = String()
+                let docRef = fireStoreDatabase.collection("Users").document(userID)
+                docRef.getDocument { document, error in
+                    guard let document = document, document.exists else{ return }
+                    let dataDescription = document.data()
+                    username = dataDescription?["username"] as! String
+                }
+                
+                //adding like with liker details to database
+                fireStoreDatabase.collection("Posts").document(self.documentIdLabel.text!).collection("Likes").document(userID).setData([
+                    "likedBy" : username,
+                    "likedByUID" : userID,
+                    "date of like" : FieldValue.serverTimestamp()
+                ])
+                
+                //counting likes
+                if let likeCount = Int(self.likeLabel.text!){
+                    let likeStore = ["likes" : likeCount + 1] as [String : Any]
+                    fireStoreDatabase.collection("Posts").document(self.documentIdLabel.text!).setData(likeStore, merge: true)
+                }
+            }
         }
-            
-            //dodaj usera do listy z userid
-            fireStoreDatabase.collection("Posts").document(self.documentIdLabel.text!).collection("Likes").document(userID).setData([
-                "likedBy" : username,
-                "likedByUID" : userID,
-                "date of like" : FieldValue.serverTimestamp()
-            ])
-        
     }
+    
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
