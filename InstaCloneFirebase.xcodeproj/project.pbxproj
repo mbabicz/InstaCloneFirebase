@@ -18,6 +18,7 @@
 		296AAB7228E2EE2E00F0F499 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 296AAB7128E2EE2E00F0F499 /* Assets.xcassets */; };
 		296AAB7528E2EE2E00F0F499 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 296AAB7328E2EE2E00F0F499 /* LaunchScreen.storyboard */; };
 		296AAB7D28E2F00100F0F499 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 296AAB7C28E2F00100F0F499 /* GoogleService-Info.plist */; };
+		29AC977128F8979700458A0B /* ProfileSettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AC977028F8979700458A0B /* ProfileSettingsVC.swift */; };
 		29AE752328F44A910097A9F8 /* SDWebImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29AE752228F44A910097A9F8 /* SDWebImage.framework */; };
 		29AE752528F44AD40097A9F8 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 29AE752428F44AD40097A9F8 /* FirebaseAnalytics */; };
 		29AE752728F44AD40097A9F8 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 29AE752628F44AD40097A9F8 /* FirebaseAuth */; };
@@ -41,6 +42,7 @@
 		296AAB7128E2EE2E00F0F499 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		296AAB7428E2EE2E00F0F499 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		296AAB7C28E2F00100F0F499 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		29AC977028F8979700458A0B /* ProfileSettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingsVC.swift; sourceTree = "<group>"; };
 		29AE752028F44A880097A9F8 /* Pods_InstaCloneFirebase.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pods_InstaCloneFirebase.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		29AE752228F44A910097A9F8 /* SDWebImage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SDWebImage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		29B27C3D28F4B88C002C2C46 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
@@ -105,6 +107,7 @@
 				29B58A0D28EC9A9A00BF2459 /* FeedCell.swift */,
 				29B27C3D28F4B88C002C2C46 /* SignUpViewController.swift */,
 				29B27C3F28F4C46E002C2C46 /* ProfileViewController.swift */,
+				29AC977028F8979700458A0B /* ProfileSettingsVC.swift */,
 			);
 			path = InstaCloneFirebase;
 			sourceTree = "<group>";
@@ -261,6 +264,7 @@
 				296AAB6928E2EE2C00F0F499 /* AppDelegate.swift in Sources */,
 				29430FEE28E8920700BD8550 /* FeedViewController.swift in Sources */,
 				29B27C4028F4C46E002C2C46 /* ProfileViewController.swift in Sources */,
+				29AC977128F8979700458A0B /* ProfileSettingsVC.swift in Sources */,
 				296AAB6B28E2EE2C00F0F499 /* SceneDelegate.swift in Sources */,
 				29430FF228E8922200BD8550 /* SettingsViewController.swift in Sources */,
 			);

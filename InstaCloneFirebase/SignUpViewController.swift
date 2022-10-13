@@ -38,7 +38,8 @@ class SignUpViewController: UIViewController {
                     firestoreDatabase.collection("Users").document(userID).setData([
                         "username" : self.usernameText.text!,
                         "email" : self.emailText.text!,
-                        "date of registration" : FieldValue.serverTimestamp()
+                        "date of registration" : FieldValue.serverTimestamp(),
+                        "description" : ""
                     
                     ]){ err in
                         if err != nil{

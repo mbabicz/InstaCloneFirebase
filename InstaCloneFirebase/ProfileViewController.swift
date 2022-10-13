@@ -15,22 +15,41 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var postsLabel: UILabel!
     @IBOutlet weak var followersLabel: UILabel!
     @IBOutlet weak var followingLabel: UILabel!
-    
+    @IBOutlet weak var descriptionLabel: UILabel!
     
     var username = String()
+    var userID = String()
+    let firestoreDatabase = Firestore.firestore()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        userID = Auth.auth().currentUser!.uid
+        
+//        loadUsernameLabel()
+//        loadNumberOfPosts()
+//        loadNumberOfFollowers()
+//        loadNumberOfFollowing()
+//        loadDescription()
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
         loadUsernameLabel()
         loadNumberOfPosts()
         loadNumberOfFollowers()
         loadNumberOfFollowing()
+        loadDescription()
+    }
+    
+
+    @IBAction func profileSettingsButton(_ sender: Any) {
+        performSegue(withIdentifier: "toProfileSettings", sender: nil)
     }
     
     func loadUsernameLabel(){
-        let userID = Auth.auth().currentUser!.uid
-        let ref = Firestore.firestore().collection("Users").document(userID)
+        
+        let ref = firestoreDatabase.collection("Users").document(userID)
         ref.getDocument { document, error in
             guard let document = document, document.exists else{ return }
             let dataDescription = document.data()
@@ -53,6 +72,17 @@ class ProfileViewController: UIViewController {
     func loadNumberOfFollowing(){
         
         self.followingLabel.text = String(3)
+    }
+    
+    func loadDescription(){
+        let ref = firestoreDatabase.collection("Users").document(userID)
+        ref.getDocument { document, error in
+            guard let document = document, document.exists else{ return }
+            let dataDescription = document.data()
+            var userDescription = dataDescription?["description"] as! String
+            self.descriptionLabel.text = userDescription
+        }
+        
     }
     
 
