@@ -216,10 +216,10 @@
             </objects>
             <point key="canvasLocation" x="678" y="-1699"/>
         </scene>
-        <!--Item-->
+        <!--Profile-->
         <scene sceneID="fyP-7z-Ij6">
             <objects>
-                <viewController id="lQC-6y-qin" customClass="ProfileViewController" customModule="InstaCloneFirebase" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="profileVC" id="lQC-6y-qin" customClass="ProfileViewController" customModule="InstaCloneFirebase" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="brX-Dz-ClC">
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -231,19 +231,19 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Followers" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8uX-LH-XFE">
-                                <rect key="frame" x="210" y="229" width="72" height="21"/>
+                                <rect key="frame" x="210" y="180" width="72" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Following" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r9k-f7-DJg">
-                                <rect key="frame" x="305" y="229" width="72" height="21"/>
+                                <rect key="frame" x="305" y="180" width="72" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Posts" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RVw-Ni-a18">
-                                <rect key="frame" x="144" y="229" width="43" height="21"/>
+                                <rect key="frame" x="144" y="180" width="43" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="BK0-mm-h1c"/>
                                 </constraints>
@@ -331,7 +331,9 @@
                             <constraint firstItem="9ld-Ws-ihj" firstAttribute="top" secondItem="GBL-4e-3i4" secondAttribute="top" constant="14" id="vOc-9C-Xs0"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item" id="Vb3-pF-EUy"/>
+                    <tabBarItem key="tabBarItem" title="Profile" id="Vb3-pF-EUy">
+                        <imageReference key="image" image="p.circle" catalog="system" symbolScale="large"/>
+                    </tabBarItem>
                     <navigationItem key="navigationItem" id="4DF-qE-Lkq"/>
                     <connections>
                         <outlet property="descriptionLabel" destination="yqk-6c-6NS" id="TKc-4v-ePo"/>
@@ -366,7 +368,7 @@
                                 <buttonConfiguration key="configuration" style="plain" title="Save"/>
                                 <connections>
                                     <action selector="saveButton:" destination="llI-94-bLS" eventType="touchUpInside" id="thd-oL-fvX"/>
-                                    <segue destination="lQC-6y-qin" kind="presentation" identifier="toProfileVC" modalPresentationStyle="fullScreen" id="xBM-Fm-Q1E"/>
+                                    <segue destination="GxW-lL-UUl" kind="presentation" identifier="toProfileVC" modalPresentationStyle="fullScreen" id="XtL-Y3-9Sx"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -380,7 +382,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pfj-xG-ab7" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1073.8461538461538" y="-76.066350710900466"/>
+            <point key="canvasLocation" x="1034" y="-171"/>
         </scene>
         <!--Add-->
         <scene sceneID="3eq-Wm-UOM">
@@ -474,6 +476,22 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6Wu-g0-Avc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1191" y="-931"/>
+        </scene>
+        <!--Search-->
+        <scene sceneID="Rdj-In-cIN">
+            <objects>
+                <viewController id="gNt-wb-Aoo" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="58e-yl-Qb0">
+                        <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="234-fj-AUy"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Search" image="magnifyingglass" catalog="system" id="VoE-yv-mIV"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1HG-nk-5kd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2046" y="-122"/>
         </scene>
         <!--Feed-->
         <scene sceneID="ZGG-KM-elZ">
@@ -597,9 +615,10 @@
                     </tabBar>
                     <connections>
                         <segue destination="3Yv-ja-2dZ" kind="relationship" relationship="viewControllers" id="42y-0b-MUt"/>
-                        <segue destination="H5a-ai-hnD" kind="relationship" relationship="viewControllers" id="VjM-7s-qc5"/>
-                        <segue destination="zXQ-SZ-WJb" kind="relationship" relationship="viewControllers" id="dOv-aT-uih"/>
-                        <segue destination="lQC-6y-qin" kind="relationship" relationship="viewControllers" id="mvx-rn-dOT"/>
+                        <segue destination="gNt-wb-Aoo" kind="relationship" relationship="viewControllers" id="AOF-gS-STK"/>
+                        <segue destination="zXQ-SZ-WJb" kind="relationship" relationship="viewControllers" id="fIj-TN-b9K"/>
+                        <segue destination="H5a-ai-hnD" kind="relationship" relationship="viewControllers" id="v5t-PA-swx"/>
+                        <segue destination="lQC-6y-qin" kind="relationship" relationship="viewControllers" id="tAJ-IW-nXY"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IGv-2r-svn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -608,12 +627,14 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="eTd-nx-x0r"/>
-        <segue reference="xBM-Fm-Q1E"/>
+        <segue reference="Y1y-Jx-lEA"/>
+        <segue reference="XtL-Y3-9Sx"/>
         <segue reference="ByI-CA-WxW"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="f.circle.fill" catalog="system" width="128" height="123"/>
+        <image name="magnifyingglass" catalog="system" width="128" height="117"/>
+        <image name="p.circle" catalog="system" width="128" height="123"/>
         <image name="plus" catalog="system" width="128" height="113"/>
         <image name="s.circle.fill" catalog="system" width="128" height="123"/>
         <image name="select" width="158" height="130"/>

@@ -17,8 +17,9 @@ class ProfileSettingsVC: UIViewController {
         var firestoreDatabase = Firestore.firestore()
         let description = ["description" : descriptionTextField.text!] as [String : Any]
         firestoreDatabase.collection("Users").document(userID).setData(description, merge: true)
+
         performSegue(withIdentifier: "toProfileVC", sender: nil)
-        makeAlert(titleInput: "DONE", messageInput: "")
+        //makeAlert(titleInput: "DONE", messageInput: "")
     }
     
     override func viewDidLoad() {
@@ -26,6 +27,15 @@ class ProfileSettingsVC: UIViewController {
 
         // Do any additional setup after loading the view.
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "toProfileVC"{
+            if let destVC = segue.destination as? UITabBarController{
+                destVC.selectedIndex = 3
+            }
+        }
+    }
+    
     
     func makeAlert(titleInput:String, messageInput:String){
         let alert = UIAlertController(title: titleInput, message: messageInput, preferredStyle: UIAlertController.Style.alert)
