@@ -7,16 +7,23 @@
 
 import UIKit
 import Firebase
+import FirebaseStorage
 
-class ProfileSettingsVC: UIViewController {
+class ProfileSettingsVC: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
+    @IBOutlet weak var profileImage: UIImageView!
     @IBOutlet weak var descriptionTextField: UITextField!
+    
+    @IBOutlet weak var changeProfilePictureLabel: UILabel!
+    
+    let firestoreDatabase = Firestore.firestore()
+
     let userID = Auth.auth().currentUser!.uid
     
     @IBAction func saveButton(_ sender: Any) {
-        var firestoreDatabase = Firestore.firestore()
         let description = ["description" : descriptionTextField.text!] as [String : Any]
         firestoreDatabase.collection("Users").document(userID).setData(description, merge: true)
+        saveNewProfilePicture()
 
         performSegue(withIdentifier: "toProfileVC", sender: nil)
         //makeAlert(titleInput: "DONE", messageInput: "")
@@ -24,17 +31,69 @@ class ProfileSettingsVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        loadProfileImage()
 
-        // Do any additional setup after loading the view.
+        changeProfilePictureLabel.isUserInteractionEnabled = true
+        let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(chooseImage))
+        changeProfilePictureLabel.addGestureRecognizer(gestureRecognizer)
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "toProfileVC"{
-            if let destVC = segue.destination as? UITabBarController{
-                destVC.selectedIndex = 3
+    @objc func chooseImage(){
+        
+        let pickerController = UIImagePickerController()
+        pickerController.delegate = self
+        pickerController.sourceType = .photoLibrary
+        present(pickerController, animated: true, completion: nil)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        profileImage.image = info[.originalImage] as? UIImage
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    func loadProfileImage(){
+        let ref = firestoreDatabase.collection("Users").document(userID)
+        ref.getDocument { document, error in
+            guard let document = document, document.exists else { return }
+            let dataDescription = document.data()
+            var userImage = dataDescription?["profile picture"] as! String
+            self.profileImage.sd_setImage(with:URL(string: userImage))
+            self.profileImage.layer.borderWidth = 1.0
+            self.profileImage.layer.masksToBounds = false
+            self.profileImage.layer.borderColor = UIColor.white.cgColor
+            self.profileImage.layer.cornerRadius = self.profileImage.frame.size.width / 2
+            self.profileImage.clipsToBounds = true
+        }
+    }
+
+    func saveNewProfilePicture(){
+        let storage = Storage.storage()
+        let storageReference = storage.reference()
+        let mediaFolder = storageReference.child("profile-pictures")
+        
+        
+        if let data = profileImage.image?.jpegData(compressionQuality: 0.5){
+            let imageReference = mediaFolder.child("\(userID).jpeg")
+            imageReference.putData(data) { (metadata, error) in
+                if error != nil {
+                    self.makeAlert(titleInput: "Error!", messageInput: error?.localizedDescription ?? "Error")
+                } else {
+                    imageReference.downloadURL { (url, error) in
+                        if error == nil {
+                            let imageUrl = url?.absoluteString
+                            let docRef = self.firestoreDatabase.collection("Users").document(self.userID)
+                            let newImageURL = ["profile picture" : imageUrl!] as [String : Any]
+                            docRef.setData(newImageURL, merge: true)
+                            
+                        }
+                        
+                        
+                    }
+                }
             }
         }
     }
+    
     
     
     func makeAlert(titleInput:String, messageInput:String){

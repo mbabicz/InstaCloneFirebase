@@ -39,7 +39,8 @@ class SignUpViewController: UIViewController {
                         "username" : self.usernameText.text!,
                         "email" : self.emailText.text!,
                         "date of registration" : FieldValue.serverTimestamp(),
-                        "description" : ""
+                        "description" : "",
+                        "profile picture" : "https://firebasestorage.googleapis.com/v0/b/instaclonefirebase-2b29a.appspot.com/o/media%2Fprofile-picture.png?alt=media&token=bf026256-7466-43fb-8ede-c57163f3391a"
                     
                     ]){ err in
                         if err != nil{
