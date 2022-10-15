@@ -50,7 +50,13 @@ class ProfileSettingsVC: UIViewController, UIImagePickerControllerDelegate, UINa
         profileImage.image = info[.originalImage] as? UIImage
         self.dismiss(animated: true, completion: nil)
     }
-    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "toProfileVC"{
+            if let destVC = segue.destination as? UITabBarController{
+                destVC.selectedIndex = 4
+            }
+        }
+    }
     func loadProfileImage(){
         let ref = firestoreDatabase.collection("Users").document(userID)
         ref.getDocument { document, error in
