@@ -580,6 +580,10 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="STk-Yh-qq7">
+                                                    <rect key="frame" x="12" y="0.0" width="34" height="31"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="ifk-br-gCm" firstAttribute="top" secondItem="fN3-JY-GTk" secondAttribute="topMargin" constant="-12" id="1R7-LX-Unh"/>
@@ -603,6 +607,7 @@
                                             <outlet property="documentIdLabel" destination="Dlt-hN-eIv" id="XuF-9C-JUf"/>
                                             <outlet property="likeLabel" destination="reI-ax-uqk" id="1no-8U-slt"/>
                                             <outlet property="userImageView" destination="Zvm-bQ-sPv" id="pdx-1y-xvS"/>
+                                            <outlet property="userProfilePicture" destination="STk-Yh-qq7" id="EAD-EL-Q0Z"/>
                                             <outlet property="usernameLabel" destination="ifk-br-gCm" id="25J-H6-Sho"/>
                                         </connections>
                                     </tableViewCell>

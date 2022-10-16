@@ -13,10 +13,13 @@ import FirebaseFirestore
 class FeedCell: UITableViewCell {
 
     @IBOutlet weak var usernameLabel: UILabel!
+    
+    @IBOutlet weak var userProfilePicture: UIImageView!
     @IBOutlet weak var commentLabel: UILabel!
     @IBOutlet weak var userImageView: UIImageView!
     @IBOutlet weak var likeLabel: UILabel!
     @IBOutlet weak var documentIdLabel: UILabel!
+    
     
     @IBAction func likeButton(_ sender: Any) {
         

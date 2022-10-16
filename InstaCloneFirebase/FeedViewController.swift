@@ -19,6 +19,7 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
     var userCommentArray = [String]()
     var likeArray = [Int]()
     var userImageArray = [String]()
+    var userProfilePictureArray = [String]()
     var documentIdArray = [String]()
     
     override func viewDidLoad() {
@@ -82,7 +83,16 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! FeedCell
         cell.likeLabel.text = String(likeArray[indexPath.row])
         cell.commentLabel.text = userCommentArray[indexPath.row]
+        
         cell.usernameLabel.text = userEmailArray[indexPath.row]
+        
+        cell.userProfilePicture.sd_setImage(with:URL(string: self.userImageArray[indexPath.row]))
+        cell.userProfilePicture.layer.borderWidth = 1.0
+        cell.userProfilePicture.layer.masksToBounds = false
+        cell.userProfilePicture.layer.borderColor = UIColor.white.cgColor
+        cell.userProfilePicture.layer.cornerRadius = cell.userProfilePicture.frame.size.width / 2
+        cell.userProfilePicture.clipsToBounds = true
+        
         cell.userImageView.sd_setImage(with:URL(string: self.userImageArray[indexPath.row]))
         cell.documentIdLabel.text = documentIdArray[indexPath.row]
         return cell
