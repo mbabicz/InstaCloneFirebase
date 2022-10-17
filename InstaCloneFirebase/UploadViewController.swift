@@ -78,7 +78,7 @@ class UploadViewController: UIViewController, UIImagePickerControllerDelegate, U
                                 print(dataDescription?["username"] as! String)
                                 username = dataDescription?["username"] as! String
                                 
-                                let firestorePost = ["imageUrl" : imageUrl!, "postedBy" :  username, "commentText" : self.commentText.text!, "date" : FieldValue.serverTimestamp(), "likes" : 0] as [String : Any]
+                                let firestorePost = ["imageUrl" : imageUrl!, "postedBy" :  username, "postedByUID" :  userID, "commentText" : self.commentText.text!, "date" : FieldValue.serverTimestamp(), "likes" : 0] as [String : Any]
                                 
                                 firestoreReference = firestoreDatabase.collection("Posts").addDocument(data: firestorePost, completion: { (error) in
                                     if error != nil {

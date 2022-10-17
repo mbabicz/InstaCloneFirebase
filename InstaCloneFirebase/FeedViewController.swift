@@ -49,6 +49,7 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
                     self.userCommentArray.removeAll(keepingCapacity: false)
                     self.likeArray.removeAll(keepingCapacity: false)
                     self.documentIdArray.removeAll(keepingCapacity: false)
+                    self.userProfilePictureArray.removeAll(keepingCapacity: false)
                     
                     
                     for document in snapshot!.documents{
@@ -68,12 +69,24 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
                         if let imageUrl = document.get("imageUrl") as? String{
                             self.userImageArray.append(imageUrl)
                         }
+                        
+                        let postedByUID = document.get("postedByUID")
+                        let ref = fireStoreDatabase.collection("Users").document(postedByUID as! String)
+                        ref.getDocument { document, error in
+                            guard let document = document, document.exists else{ return }
+                            let dataDescription = document.data()
+                            var userProfIMG = dataDescription?["profile picture"] as! String
+                            self.userProfilePictureArray.append(userProfIMG)
+                            print("test \(userProfIMG)")
+                                
+                        }
                     }
                     self.tableView.reloadData()
                 }
             }
         }
     }
+
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return userEmailArray.count
@@ -86,6 +99,7 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         cell.usernameLabel.text = userEmailArray[indexPath.row]
         
+        //cell.userProfilePicture.sd_setImage(with:URL(string: self.userImageArray[indexPath.row]))
         cell.userProfilePicture.sd_setImage(with:URL(string: self.userImageArray[indexPath.row]))
         cell.userProfilePicture.layer.borderWidth = 1.0
         cell.userProfilePicture.layer.masksToBounds = false
