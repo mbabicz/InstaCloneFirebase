@@ -9,7 +9,7 @@ import UIKit
 import Firebase
 import SDWebImage
 
-class ProfileViewController: UIViewController {
+class ProfileViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource{
 
     
     @IBOutlet weak var usernameLabel: UILabel!
@@ -18,16 +18,28 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var followingLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
     
+    @IBOutlet weak var postsCollectionView: UICollectionView!
+    
     var username = String()
     var userID = String()
     let firestoreDatabase = Firestore.firestore()
     @IBOutlet weak var profileImage: UIImageView!
+    
+    var userImagesArray = [String]()
+    var documentIdArray = [String]()
     
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         userID = Auth.auth().currentUser!.uid
+        
+        postsCollectionView.delegate = self
+        postsCollectionView.dataSource = self
+        
+        getDataFromFirestore()
+        
+        
         
 
     }
@@ -99,6 +111,52 @@ class ProfileViewController: UIViewController {
         }
         
     }
+    func getDataFromFirestore(){
+        
+        let fireStoreDatabase = Firestore.firestore()
+        
+        fireStoreDatabase.collection("Posts").order(by: "date", descending: true ).addSnapshotListener { (snapshot, error) in
+            if error != nil{
+                print(error?.localizedDescription)
+                
+            }
+            else{
+                if(snapshot?.isEmpty != true && snapshot != nil){
+                    
+                    self.userImagesArray.removeAll(keepingCapacity: false)
+                    self.documentIdArray.removeAll(keepingCapacity: false)
+                    
+                    
+                    for document in snapshot!.documents{
+                        let documentID = document.documentID
+                        self.documentIdArray.append(documentID)
+                        
+                        //getting value of postedBy in firebase structure
+                        if let imageUrl = document.get("imageUrl") as? String{
+                            self.userImagesArray.append(imageUrl)
+                        }
+                        
+                    }
+                    self.postsCollectionView.reloadData()
+                    //self.tableView.reloadData()
+                }
+            }
+        }
+    }
     
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return userImagesArray.count
+    }
+
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = postsCollectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! PostsCell
+        cell.postsImageView.sd_setImage(with: URL(string: self.userImagesArray[indexPath.row]))
+        return cell
+    }
 
 }
