@@ -100,19 +100,22 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
         cell.usernameLabel.text = userEmailArray[indexPath.row]
         
         //cell.userProfilePicture.sd_setImage(with:URL(string: self.userImageArray[indexPath.row]))
-        cell.userProfilePicture.sd_setImage(with:URL(string: self.userImageArray[indexPath.row]))
-        cell.userProfilePicture.layer.borderWidth = 1.0
-        cell.userProfilePicture.layer.masksToBounds = false
-        cell.userProfilePicture.layer.borderColor = UIColor.white.cgColor
-        cell.userProfilePicture.layer.cornerRadius = cell.userProfilePicture.frame.size.width / 2
-        cell.userProfilePicture.clipsToBounds = true
-        
+        let transformer = SDImageResizingTransformer(size: CGSize(width: 120,height: 120), scaleMode: .fill)
+        cell.userProfilePicture.sd_setImage(with:URL(string: self.userImageArray[indexPath.row]) ,placeholderImage: nil, context: [.imageTransformer: transformer])
+        self.makeRounded(picture: cell.userProfilePicture)
+
         cell.userImageView.sd_setImage(with:URL(string: self.userImageArray[indexPath.row]))
         cell.documentIdLabel.text = documentIdArray[indexPath.row]
         return cell
     }
     
     
-//tab
+    func makeRounded(picture : UIImageView){
+        picture.layer.borderWidth = 1.0
+        picture.layer.masksToBounds = false
+        picture.layer.borderColor = UIColor.white.cgColor
+        picture.layer.cornerRadius = picture.frame.size.width / 2
+        picture.clipsToBounds = true
+    }
 
 }

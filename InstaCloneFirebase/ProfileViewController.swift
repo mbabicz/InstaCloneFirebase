@@ -54,6 +54,10 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         loadNumberOfFollowers()
         loadNumberOfFollowing()
         loadDescription()
+        //loadProfileImage()
+    }
+    
+    override func viewWillLayoutSubviews() {
         loadProfileImage()
     }
     
@@ -106,12 +110,9 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
             guard let document = document, document.exists else { return }
             let dataDescription = document.data()
             var userImage = dataDescription?["profile picture"] as! String
-            self.profileImage.sd_setImage(with:URL(string: userImage))
-            self.profileImage.layer.borderWidth = 1.0
-            self.profileImage.layer.masksToBounds = false
-            self.profileImage.layer.borderColor = UIColor.white.cgColor
-            self.profileImage.layer.cornerRadius = self.profileImage.frame.size.width / 2
-            self.profileImage.clipsToBounds = true
+            let transformer = SDImageResizingTransformer(size: CGSize(width: 120,height: 120), scaleMode: .fill)
+            self.profileImage.sd_setImage(with:URL(string: userImage) ,placeholderImage: nil, context: [.imageTransformer: transformer])
+            self.makeRounded(picture: self.profileImage)
         }
         
     }
@@ -148,6 +149,14 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         }
     }
     
+    func makeRounded(picture : UIImageView){
+        picture.layer.borderWidth = 1.0
+        picture.layer.masksToBounds = false
+        picture.layer.borderColor = UIColor.white.cgColor
+        picture.layer.cornerRadius = picture.frame.size.width / 2
+        picture.clipsToBounds = true
+    }
+    
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
@@ -159,7 +168,11 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = postsCollectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! PostsCell
-        cell.postsImageView.sd_setImage(with: URL(string: self.userImagesArray[indexPath.row]))
+        //cell.postsImageView.sd_setImage(with: URL(string: self.userImagesArray[indexPath.row]))
+        
+        let transformer = SDImageResizingTransformer(size: CGSize(width: 128,height: 128), scaleMode: .fill)
+        cell.postsImageView.sd_setImage(with: URL(string: self.userImagesArray[indexPath.row]), placeholderImage: nil, context: [.imageTransformer: transformer])
+        
         return cell
     }
 
