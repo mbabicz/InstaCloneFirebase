@@ -9,7 +9,7 @@ import UIKit
 import Firebase
 import SDWebImage
 
-class ProfileViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource{
+class ProfileViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
 
     
     @IBOutlet weak var usernameLabel: UILabel!
@@ -38,6 +38,10 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         postsCollectionView.dataSource = self
         
         getDataFromFirestore()
+        
+//        if let flowLayout = postsCollectionView.collectionViewLayout as? UICollectionViewFlowLayout{
+//            flowLayout.estimatedItemSize = CGSize(width: 1, height: 1)
+//        }
         
         
         
