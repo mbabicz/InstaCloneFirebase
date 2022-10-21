@@ -116,6 +116,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         }
         
     }
+    
     func getDataFromFirestore(){
         
         let fireStoreDatabase = Firestore.firestore()

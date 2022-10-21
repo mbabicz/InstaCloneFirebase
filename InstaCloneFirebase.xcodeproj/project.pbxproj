@@ -29,6 +29,8 @@
 		29B27C3E28F4B88C002C2C46 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B27C3D28F4B88C002C2C46 /* SignUpViewController.swift */; };
 		29B27C4028F4C46E002C2C46 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B27C3F28F4C46E002C2C46 /* ProfileViewController.swift */; };
 		29B58A0E28EC9A9A00BF2459 /* FeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B58A0D28EC9A9A00BF2459 /* FeedCell.swift */; };
+		29EF0C72290332B00002795E /* RandomPostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EF0C71290332B00002795E /* RandomPostCell.swift */; };
+		29EF0C74290332CD0002795E /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EF0C73290332CD0002795E /* SearchViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -51,6 +53,8 @@
 		29B27C3F28F4C46E002C2C46 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		29B58A0928EC960500BF2459 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		29B58A0D28EC9A9A00BF2459 /* FeedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCell.swift; sourceTree = "<group>"; };
+		29EF0C71290332B00002795E /* RandomPostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomPostCell.swift; sourceTree = "<group>"; };
+		29EF0C73290332CD0002795E /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		2E4A2555A07813FC6C1CAC4E /* Pods-InstaCloneFirebase.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstaCloneFirebase.release.xcconfig"; path = "Target Support Files/Pods-InstaCloneFirebase/Pods-InstaCloneFirebase.release.xcconfig"; sourceTree = "<group>"; };
 		B425344A5FADE7061E222D8B /* Pods_InstaCloneFirebase.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_InstaCloneFirebase.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CF7B27D3E005220631AC0508 /* Pods-InstaCloneFirebase.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstaCloneFirebase.debug.xcconfig"; path = "Target Support Files/Pods-InstaCloneFirebase/Pods-InstaCloneFirebase.debug.xcconfig"; sourceTree = "<group>"; };
@@ -111,6 +115,8 @@
 				29B27C3F28F4C46E002C2C46 /* ProfileViewController.swift */,
 				29AC977028F8979700458A0B /* ProfileSettingsVC.swift */,
 				29AC977628FEEE4C00458A0B /* PostsCell.swift */,
+				29EF0C71290332B00002795E /* RandomPostCell.swift */,
+				29EF0C73290332CD0002795E /* SearchViewController.swift */,
 			);
 			path = InstaCloneFirebase;
 			sourceTree = "<group>";
@@ -262,11 +268,13 @@
 			files = (
 				29B58A0E28EC9A9A00BF2459 /* FeedCell.swift in Sources */,
 				296AAB6D28E2EE2C00F0F499 /* ViewController.swift in Sources */,
+				29EF0C72290332B00002795E /* RandomPostCell.swift in Sources */,
 				29AC977728FEEE4C00458A0B /* PostsCell.swift in Sources */,
 				29B27C3E28F4B88C002C2C46 /* SignUpViewController.swift in Sources */,
 				29430FF028E8921300BD8550 /* UploadViewController.swift in Sources */,
 				296AAB6928E2EE2C00F0F499 /* AppDelegate.swift in Sources */,
 				29430FEE28E8920700BD8550 /* FeedViewController.swift in Sources */,
+				29EF0C74290332CD0002795E /* SearchViewController.swift in Sources */,
 				29B27C4028F4C46E002C2C46 /* ProfileViewController.swift in Sources */,
 				29AC977128F8979700458A0B /* ProfileSettingsVC.swift in Sources */,
 				296AAB6B28E2EE2C00F0F499 /* SceneDelegate.swift in Sources */,

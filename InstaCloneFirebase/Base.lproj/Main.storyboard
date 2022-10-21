@@ -6,6 +6,7 @@
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -295,7 +296,7 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell autoresizesSubviews="NO" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" fixedFrame="YES" reuseIdentifier="Cell" translatesAutoresizingMaskIntoConstraints="NO" id="aKq-Ht-JOg" customClass="PostsCell" customModule="InstaCloneFirebase" customModuleProvider="target">
+                                    <collectionViewCell autoresizesSubviews="NO" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Cell" translatesAutoresizingMaskIntoConstraints="NO" id="aKq-Ht-JOg" customClass="PostsCell" customModule="InstaCloneFirebase" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="129" height="129"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
@@ -520,18 +521,63 @@
         <!--Search-->
         <scene sceneID="Rdj-In-cIN">
             <objects>
-                <viewController id="gNt-wb-Aoo" sceneMemberID="viewController">
+                <viewController id="gNt-wb-Aoo" customClass="SearchViewController" customModule="InstaCloneFirebase" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="58e-yl-Qb0">
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="M3h-qf-B11">
+                                <rect key="frame" x="0.0" y="108" width="390" height="653"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="1" minimumInteritemSpacing="1" id="AgG-2f-7nK">
+                                    <size key="itemSize" width="128" height="128"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PostCell" id="sHh-ES-9vh" customClass="RandomPostCell" customModule="InstaCloneFirebase" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="K4J-QM-ho1">
+                                            <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bbV-eu-8JL">
+                                                    <rect key="frame" x="0.0" y="0.0" width="129" height="129"/>
+                                                </imageView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="bbV-eu-8JL" firstAttribute="top" secondItem="K4J-QM-ho1" secondAttribute="top" id="29n-O9-opL"/>
+                                                <constraint firstItem="bbV-eu-8JL" firstAttribute="centerY" secondItem="K4J-QM-ho1" secondAttribute="centerY" id="6rj-2Q-WaD"/>
+                                                <constraint firstItem="bbV-eu-8JL" firstAttribute="centerX" secondItem="K4J-QM-ho1" secondAttribute="centerX" id="Jxb-Tr-T42"/>
+                                                <constraint firstItem="bbV-eu-8JL" firstAttribute="leading" secondItem="K4J-QM-ho1" secondAttribute="leading" id="hEW-dF-MNj"/>
+                                            </constraints>
+                                        </collectionViewCellContentView>
+                                        <connections>
+                                            <outlet property="postImageView" destination="bbV-eu-8JL" id="ezf-3H-llO"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="234-fj-AUy"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="M3h-qf-B11" firstAttribute="bottom" secondItem="234-fj-AUy" secondAttribute="bottom" id="Fxj-F8-nqk"/>
+                            <constraint firstItem="M3h-qf-B11" firstAttribute="centerX" secondItem="58e-yl-Qb0" secondAttribute="centerX" id="HQj-JB-eoS"/>
+                            <constraint firstItem="M3h-qf-B11" firstAttribute="top" secondItem="234-fj-AUy" secondAttribute="top" constant="61" id="ddS-li-cPw"/>
+                            <constraint firstItem="M3h-qf-B11" firstAttribute="leading" secondItem="234-fj-AUy" secondAttribute="leading" id="nga-zA-vwb"/>
+                        </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Search" image="magnifyingglass" catalog="system" id="VoE-yv-mIV"/>
+                    <connections>
+                        <outlet property="ranadomPostsCollectionView" destination="M3h-qf-B11" id="voJ-dy-DS0"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1HG-nk-5kd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2046" y="-122"/>
+            <point key="canvasLocation" x="2044.6153846153845" y="-122.27488151658767"/>
         </scene>
         <!--Feed-->
         <scene sceneID="ZGG-KM-elZ">
@@ -673,6 +719,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
+        <segue reference="Y1y-Jx-lEA"/>
         <segue reference="XtL-Y3-9Sx"/>
         <segue reference="57M-cL-uJh"/>
     </inferredMetricsTieBreakers>
