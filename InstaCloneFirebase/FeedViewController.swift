@@ -19,8 +19,12 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
     var userCommentArray = [String]()
     var likeArray = [Int]()
     var userImageArray = [String]()
-    var userProfilePictureArray = [String]()
     var documentIdArray = [String]()
+    var postedByUIDArray = [String]()
+
+    
+    let firestoreDatabase = Firestore.firestore()
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,10 +37,8 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func getDataFromFirestore(){
-        
-        let fireStoreDatabase = Firestore.firestore()
-        
-        fireStoreDatabase.collection("Posts").order(by: "date", descending: true ).addSnapshotListener { (snapshot, error) in
+           
+        firestoreDatabase.collection("Posts").order(by: "date", descending: true ).addSnapshotListener { (snapshot, error) in
             if error != nil{
                 print(error?.localizedDescription)
                 
@@ -49,10 +51,12 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
                     self.userCommentArray.removeAll(keepingCapacity: false)
                     self.likeArray.removeAll(keepingCapacity: false)
                     self.documentIdArray.removeAll(keepingCapacity: false)
-                    self.userProfilePictureArray.removeAll(keepingCapacity: false)
+                    self.postedByUIDArray.removeAll(keepingCapacity: false)
+
                     
                     
                     for document in snapshot!.documents{
+                        
                         let documentID = document.documentID
                         self.documentIdArray.append(documentID)
                         
@@ -70,15 +74,8 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
                             self.userImageArray.append(imageUrl)
                         }
                         
-                        let postedByUID = document.get("postedByUID")
-                        let ref = fireStoreDatabase.collection("Users").document(postedByUID as! String)
-                        ref.getDocument { document, error in
-                            guard let document = document, document.exists else{ return }
-                            let dataDescription = document.data()
-                            var userProfIMG = dataDescription?["profile picture"] as! String
-                            self.userProfilePictureArray.append(userProfIMG)
-                            print("test \(userProfIMG)")
-                                
+                        if let postedByUID = document.get("postedByUID") as? String{
+                            self.postedByUIDArray.append(postedByUID)
                         }
                     }
                     self.tableView.reloadData()
@@ -86,6 +83,7 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
             }
         }
     }
+
 
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -99,23 +97,13 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         cell.usernameLabel.text = userEmailArray[indexPath.row]
         
-        //cell.userProfilePicture.sd_setImage(with:URL(string: self.userImageArray[indexPath.row]))
         let transformer = SDImageResizingTransformer(size: CGSize(width: 120,height: 120), scaleMode: .fill)
-        cell.userProfilePicture.sd_setImage(with:URL(string: self.userImageArray[indexPath.row]) ,placeholderImage: nil, context: [.imageTransformer: transformer])
-        self.makeRounded(picture: cell.userProfilePicture)
+
+        cell.postedByUIDLabel.text = postedByUIDArray[indexPath.row]
 
         cell.userImageView.sd_setImage(with:URL(string: self.userImageArray[indexPath.row]))
         cell.documentIdLabel.text = documentIdArray[indexPath.row]
         return cell
-    }
-    
-    
-    func makeRounded(picture : UIImageView){
-        picture.layer.borderWidth = 1.0
-        picture.layer.masksToBounds = false
-        picture.layer.borderColor = UIColor.white.cgColor
-        picture.layer.cornerRadius = picture.frame.size.width / 2
-        picture.clipsToBounds = true
     }
 
 }

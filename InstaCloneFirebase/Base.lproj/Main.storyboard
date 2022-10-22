@@ -640,6 +640,13 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mFA-gV-Rzq">
+                                                    <rect key="frame" x="12" y="444" width="335" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="Zvm-bQ-sPv" firstAttribute="leading" secondItem="IMj-uq-rcC" secondAttribute="leading" id="0Sr-OX-vzw"/>
@@ -667,6 +674,7 @@
                                             <outlet property="commentLabel" destination="UhY-wT-brK" id="mcH-cP-n71"/>
                                             <outlet property="documentIdLabel" destination="Dlt-hN-eIv" id="XuF-9C-JUf"/>
                                             <outlet property="likeLabel" destination="reI-ax-uqk" id="1no-8U-slt"/>
+                                            <outlet property="postedByUIDLabel" destination="mFA-gV-Rzq" id="6BE-hM-j4e"/>
                                             <outlet property="userImageView" destination="Zvm-bQ-sPv" id="pdx-1y-xvS"/>
                                             <outlet property="userProfilePicture" destination="STk-Yh-qq7" id="EAD-EL-Q0Z"/>
                                             <outlet property="usernameLabel" destination="ifk-br-gCm" id="25J-H6-Sho"/>
@@ -719,7 +727,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Y1y-Jx-lEA"/>
         <segue reference="XtL-Y3-9Sx"/>
         <segue reference="57M-cL-uJh"/>
     </inferredMetricsTieBreakers>

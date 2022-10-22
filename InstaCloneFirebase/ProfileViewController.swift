@@ -22,12 +22,14 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     
     var username = String()
     var userID = String()
-    let firestoreDatabase = Firestore.firestore()
+
     @IBOutlet weak var profileImage: UIImageView!
     
     var userImagesArray = [String]()
     var documentIdArray = [String]()
     
+    let firestoreDatabase = Firestore.firestore()
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -119,9 +121,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     
     func getDataFromFirestore(){
         
-        let fireStoreDatabase = Firestore.firestore()
-        
-        fireStoreDatabase.collection("Posts").order(by: "date", descending: true ).addSnapshotListener { (snapshot, error) in
+        firestoreDatabase.collection("Posts").whereField("postedByUID", isEqualTo: userID).order(by: "date", descending: true ).addSnapshotListener { (snapshot, error) in
             if error != nil{
                 print(error?.localizedDescription)
                 

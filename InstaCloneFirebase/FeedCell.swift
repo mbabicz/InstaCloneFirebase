@@ -9,6 +9,7 @@ import UIKit
 import Firebase
 import FirebaseStorage
 import FirebaseFirestore
+import SDWebImage
 
 class FeedCell: UITableViewCell {
 
@@ -19,14 +20,16 @@ class FeedCell: UITableViewCell {
     @IBOutlet weak var userImageView: UIImageView!
     @IBOutlet weak var likeLabel: UILabel!
     @IBOutlet weak var documentIdLabel: UILabel!
+    @IBOutlet weak var postedByUIDLabel: UILabel!
     
+    let firestoreDatabase = Firestore.firestore()
+
     
     @IBAction func likeButton(_ sender: Any) {
         
-        let fireStoreDatabase = Firestore.firestore()
         let userID = Auth.auth().currentUser!.uid
         
-        let ref = fireStoreDatabase.collection("Posts").document(self.documentIdLabel.text!).collection("Likes").document(userID)
+        let ref = firestoreDatabase.collection("Posts").document(self.documentIdLabel.text!).collection("Likes").document(userID)
         
         //checking if user has already liked this post
         ref.getDocument { document, error in
@@ -40,7 +43,7 @@ class FeedCell: UITableViewCell {
                         //counting likes
                         if let likeCount = Int(self.likeLabel.text!){
                             let likeStore = ["likes" : likeCount - 1] as [String : Any]
-                            fireStoreDatabase.collection("Posts").document(self.documentIdLabel.text!).setData(likeStore, merge: true)
+                            self.firestoreDatabase.collection("Posts").document(self.documentIdLabel.text!).setData(likeStore, merge: true)
                         }
                     }
                 }
@@ -49,7 +52,7 @@ class FeedCell: UITableViewCell {
                 //* giving like
                 //getting username
                 var username = String()
-                let docRef = fireStoreDatabase.collection("Users").document(userID)
+                let docRef = self.firestoreDatabase.collection("Users").document(userID)
                 docRef.getDocument { document, error in
                     guard let document = document, document.exists else{ return }
                     let dataDescription = document.data()
@@ -57,7 +60,7 @@ class FeedCell: UITableViewCell {
                 }
                 
                 //adding like with liker details to database
-                fireStoreDatabase.collection("Posts").document(self.documentIdLabel.text!).collection("Likes").document(userID).setData([
+                self.self.firestoreDatabase.collection("Posts").document(self.documentIdLabel.text!).collection("Likes").document(userID).setData([
                     "likedBy" : username,
                     "likedByUID" : userID,
                     "date of like" : FieldValue.serverTimestamp()
@@ -66,16 +69,46 @@ class FeedCell: UITableViewCell {
                 //counting likes
                 if let likeCount = Int(self.likeLabel.text!){
                     let likeStore = ["likes" : likeCount + 1] as [String : Any]
-                    fireStoreDatabase.collection("Posts").document(self.documentIdLabel.text!).setData(likeStore, merge: true)
+                    self.firestoreDatabase.collection("Posts").document(self.documentIdLabel.text!).setData(likeStore, merge: true)
                 }
             }
         }
+    }
+    
+    func setPostedByProfileImage(){
+        
+
+        
+        let ref = firestoreDatabase.collection("Users").document(self.postedByUIDLabel.text!)
+            ref.getDocument { document, error in
+            guard let document = document, document.exists else{ return }
+            let dataDescription = document.data()
+            let imageUrl = dataDescription?["profile picture"] as! String
+            let transformer = SDImageResizingTransformer(size: CGSize(width: 120,height: 120), scaleMode: .fill)
+                
+            self.userProfilePicture.sd_setImage(with: URL(string: imageUrl), placeholderImage: nil, context: [.imageTransformer: transformer])
+            self.makeRounded(picture: self.userProfilePicture)
+        }
+        
+    }
+    
+    func makeRounded(picture : UIImageView){
+        picture.layer.borderWidth = 1.0
+        picture.layer.masksToBounds = false
+        picture.layer.borderColor = UIColor.white.cgColor
+        picture.layer.cornerRadius = picture.frame.size.width / 2
+        picture.clipsToBounds = true
     }
     
 
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        setPostedByProfileImage()
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

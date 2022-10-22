@@ -8,6 +8,7 @@
 import UIKit
 import Firebase
 import FirebaseStorage
+import SDWebImage
 
 class ProfileSettingsVC: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
@@ -63,13 +64,19 @@ class ProfileSettingsVC: UIViewController, UIImagePickerControllerDelegate, UINa
             guard let document = document, document.exists else { return }
             let dataDescription = document.data()
             var userImage = dataDescription?["profile picture"] as! String
-            self.profileImage.sd_setImage(with:URL(string: userImage))
-            self.profileImage.layer.borderWidth = 1.0
-            self.profileImage.layer.masksToBounds = false
-            self.profileImage.layer.borderColor = UIColor.white.cgColor
-            self.profileImage.layer.cornerRadius = self.profileImage.frame.size.width / 2
-            self.profileImage.clipsToBounds = true
+            let transformer = SDImageResizingTransformer(size: CGSize(width: 120,height: 120), scaleMode: .fill)
+            self.profileImage.sd_setImage(with:URL(string: userImage), placeholderImage: nil, context: [.imageTransformer: transformer])
+            self.makeRounded(picture: self.profileImage)
         }
+    }
+    
+    
+    func makeRounded(picture : UIImageView){
+        picture.layer.borderWidth = 1.0
+        picture.layer.masksToBounds = false
+        picture.layer.borderColor = UIColor.white.cgColor
+        picture.layer.cornerRadius = picture.frame.size.width / 2
+        picture.clipsToBounds = true
     }
 
     func saveNewProfilePicture(){
