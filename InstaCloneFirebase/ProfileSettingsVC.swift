@@ -64,7 +64,7 @@ class ProfileSettingsVC: UIViewController, UIImagePickerControllerDelegate, UINa
             guard let document = document, document.exists else { return }
             let dataDescription = document.data()
             var userImage = dataDescription?["profile picture"] as! String
-            let transformer = SDImageResizingTransformer(size: CGSize(width: 120,height: 120), scaleMode: .fill)
+            let transformer = SDImageResizingTransformer(size: CGSize(width: 180,height: 180), scaleMode: .fill)
             self.profileImage.sd_setImage(with:URL(string: userImage), placeholderImage: nil, context: [.imageTransformer: transformer])
             self.makeRounded(picture: self.profileImage)
         }

@@ -29,6 +29,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     var documentIdArray = [String]()
     
     let firestoreDatabase = Firestore.firestore()
+    let refreshControll = UIRefreshControl()
 
 
     override func viewDidLoad() {
@@ -41,10 +42,9 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         
         getDataFromFirestore()
         
-//        if let flowLayout = postsCollectionView.collectionViewLayout as? UICollectionViewFlowLayout{
-//            flowLayout.estimatedItemSize = CGSize(width: 1, height: 1)
-//        }
-        
+        refreshControll.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        refreshControll.addTarget(self, action: #selector(self.refresh(_:)), for: .valueChanged)
+        postsCollectionView.addSubview(refreshControll)        
         
         
 
@@ -63,6 +63,9 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         loadProfileImage()
     }
     
+    @objc func refresh(_ sender: AnyObject){
+        postsCollectionView.reloadData()
+    }
 
     @IBAction func profileSettingsButton(_ sender: Any) {
         performSegue(withIdentifier: "toProfileSettings", sender: nil)

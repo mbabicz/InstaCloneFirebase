@@ -7,10 +7,24 @@
 
 import UIKit
 
-class PostsCell: UICollectionViewCell {
+class PostsCell: UICollectionViewCell, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
     
     @IBOutlet weak var postsImageView: UIImageView!
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        postsImageView.isUserInteractionEnabled = true
+        let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(detailedPostVC))
+        postsImageView.addGestureRecognizer(gestureRecognizer)
+        
+    }
     
+    
+    @objc func detailedPostVC(){
+        //erformSegue(withIdentifier: "toDetailedPostVC", sender: nil)
+    }
+
     
 }
+

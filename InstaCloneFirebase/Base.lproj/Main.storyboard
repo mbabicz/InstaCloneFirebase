@@ -217,6 +217,22 @@
             </objects>
             <point key="canvasLocation" x="678" y="-1699"/>
         </scene>
+        <!--View Controller-->
+        <scene sceneID="zV2-0d-u5v">
+            <objects>
+                <viewController id="rIB-YQ-Z6e" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="V3A-hy-PNH">
+                        <rect key="frame" x="0.0" y="0.0" width="390" height="787"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="QRQ-cX-bdW"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="wDZ-EU-r1P"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="nmc-1o-jaN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-469" y="523"/>
+        </scene>
         <!--Profile-->
         <scene sceneID="fyP-7z-Ij6">
             <objects>
@@ -349,6 +365,7 @@
                         <outlet property="postsLabel" destination="IyD-F1-ym5" id="0h8-yq-02R"/>
                         <outlet property="profileImage" destination="HLM-5r-Qdl" id="TcF-6M-OlP"/>
                         <outlet property="usernameLabel" destination="9ld-Ws-ihj" id="Eel-JG-vX3"/>
+                        <segue destination="rIB-YQ-Z6e" kind="show" identifier="toDetailedPostVC" id="3Di-1P-9SA"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Zuh-9q-B1z" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -384,7 +401,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Xue-kF-rit">
-                                <rect key="frame" x="99" y="28" width="191" height="159"/>
+                                <rect key="frame" x="99" y="28" width="180" height="180"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Nickname" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pT6-CP-n7X">
@@ -727,8 +744,9 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
+        <segue reference="Y1y-Jx-lEA"/>
         <segue reference="XtL-Y3-9Sx"/>
-        <segue reference="57M-cL-uJh"/>
+        <segue reference="ByI-CA-WxW"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="f.circle.fill" catalog="system" width="128" height="123"/>
