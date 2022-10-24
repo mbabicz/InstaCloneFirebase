@@ -27,6 +27,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     
     var userImagesArray = [String]()
     var documentIdArray = [String]()
+    var chosenPostID = " "
     
     let firestoreDatabase = Firestore.firestore()
     let refreshControll = UIRefreshControl()
@@ -179,5 +180,22 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         
         return cell
     }
+    
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        chosenPostID = documentIdArray[indexPath.row]
+
+        performSegue(withIdentifier: "toDetailedPostVC", sender: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "toDetailedPostVC"{
+            let destinationTableView = segue.destination as! DetailedPostViewController
+            destinationTableView.chosenPostID = chosenPostID
+            
+        }
+    }
+
 
 }

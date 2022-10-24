@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		07BCCF4C63F5581F870091B6 /* Pods_InstaCloneFirebase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B425344A5FADE7061E222D8B /* Pods_InstaCloneFirebase.framework */; };
+		294030222906E7600058F243 /* DetailedPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294030212906E7600058F243 /* DetailedPostViewController.swift */; };
 		29430FEE28E8920700BD8550 /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29430FED28E8920700BD8550 /* FeedViewController.swift */; };
 		29430FF028E8921300BD8550 /* UploadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29430FEF28E8921300BD8550 /* UploadViewController.swift */; };
 		29430FF228E8922200BD8550 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29430FF128E8922200BD8550 /* SettingsViewController.swift */; };
@@ -34,6 +35,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		294030212906E7600058F243 /* DetailedPostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedPostViewController.swift; sourceTree = "<group>"; };
 		29430FED28E8920700BD8550 /* FeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
 		29430FEF28E8921300BD8550 /* UploadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadViewController.swift; sourceTree = "<group>"; };
 		29430FF128E8922200BD8550 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
@@ -117,6 +119,7 @@
 				29AC977628FEEE4C00458A0B /* PostsCell.swift */,
 				29EF0C71290332B00002795E /* RandomPostCell.swift */,
 				29EF0C73290332CD0002795E /* SearchViewController.swift */,
+				294030212906E7600058F243 /* DetailedPostViewController.swift */,
 			);
 			path = InstaCloneFirebase;
 			sourceTree = "<group>";
@@ -276,6 +279,7 @@
 				29430FEE28E8920700BD8550 /* FeedViewController.swift in Sources */,
 				29EF0C74290332CD0002795E /* SearchViewController.swift in Sources */,
 				29B27C4028F4C46E002C2C46 /* ProfileViewController.swift in Sources */,
+				294030222906E7600058F243 /* DetailedPostViewController.swift in Sources */,
 				29AC977128F8979700458A0B /* ProfileSettingsVC.swift in Sources */,
 				296AAB6B28E2EE2C00F0F499 /* SceneDelegate.swift in Sources */,
 				29430FF228E8922200BD8550 /* SettingsViewController.swift in Sources */,

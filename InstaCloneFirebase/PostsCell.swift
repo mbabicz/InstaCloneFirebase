@@ -13,18 +13,10 @@ class PostsCell: UICollectionViewCell, UIImagePickerControllerDelegate & UINavig
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        
-        postsImageView.isUserInteractionEnabled = true
-        let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(detailedPostVC))
-        postsImageView.addGestureRecognizer(gestureRecognizer)
-        
-    }
-    
-    
-    @objc func detailedPostVC(){
-        //erformSegue(withIdentifier: "toDetailedPostVC", sender: nil)
-    }
 
+        
+    }
+    
     
 }
 
