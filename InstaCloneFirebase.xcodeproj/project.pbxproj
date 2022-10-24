@@ -80,6 +80,41 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		29403023290709090058F243 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				294030212906E7600058F243 /* DetailedPostViewController.swift */,
+				29EF0C73290332CD0002795E /* SearchViewController.swift */,
+				29AC977028F8979700458A0B /* ProfileSettingsVC.swift */,
+				29B27C3F28F4C46E002C2C46 /* ProfileViewController.swift */,
+				29B27C3D28F4B88C002C2C46 /* SignUpViewController.swift */,
+				29430FF128E8922200BD8550 /* SettingsViewController.swift */,
+				29430FEF28E8921300BD8550 /* UploadViewController.swift */,
+				29430FED28E8920700BD8550 /* FeedViewController.swift */,
+				296AAB6C28E2EE2C00F0F499 /* ViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		29403024290709100058F243 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				29EF0C71290332B00002795E /* RandomPostCell.swift */,
+				29AC977628FEEE4C00458A0B /* PostsCell.swift */,
+				29B58A0D28EC9A9A00BF2459 /* FeedCell.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		29403025290709670058F243 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				296AAB7128E2EE2E00F0F499 /* Assets.xcassets */,
+				296AAB7328E2EE2E00F0F499 /* LaunchScreen.storyboard */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		296AAB5C28E2EE2C00F0F499 = {
 			isa = PBXGroup;
 			children = (
@@ -101,25 +136,14 @@
 		296AAB6728E2EE2C00F0F499 /* InstaCloneFirebase */ = {
 			isa = PBXGroup;
 			children = (
+				29403025290709670058F243 /* Resources */,
+				29403024290709100058F243 /* Views */,
+				29403023290709090058F243 /* ViewControllers */,
 				296AAB7C28E2F00100F0F499 /* GoogleService-Info.plist */,
 				296AAB6828E2EE2C00F0F499 /* AppDelegate.swift */,
 				296AAB6A28E2EE2C00F0F499 /* SceneDelegate.swift */,
-				296AAB6C28E2EE2C00F0F499 /* ViewController.swift */,
 				296AAB6E28E2EE2C00F0F499 /* Main.storyboard */,
-				296AAB7128E2EE2E00F0F499 /* Assets.xcassets */,
-				296AAB7328E2EE2E00F0F499 /* LaunchScreen.storyboard */,
-				29430FED28E8920700BD8550 /* FeedViewController.swift */,
-				29430FEF28E8921300BD8550 /* UploadViewController.swift */,
-				29430FF128E8922200BD8550 /* SettingsViewController.swift */,
 				29B58A0928EC960500BF2459 /* Info.plist */,
-				29B58A0D28EC9A9A00BF2459 /* FeedCell.swift */,
-				29B27C3D28F4B88C002C2C46 /* SignUpViewController.swift */,
-				29B27C3F28F4C46E002C2C46 /* ProfileViewController.swift */,
-				29AC977028F8979700458A0B /* ProfileSettingsVC.swift */,
-				29AC977628FEEE4C00458A0B /* PostsCell.swift */,
-				29EF0C71290332B00002795E /* RandomPostCell.swift */,
-				29EF0C73290332CD0002795E /* SearchViewController.swift */,
-				294030212906E7600058F243 /* DetailedPostViewController.swift */,
 			);
 			path = InstaCloneFirebase;
 			sourceTree = "<group>";
