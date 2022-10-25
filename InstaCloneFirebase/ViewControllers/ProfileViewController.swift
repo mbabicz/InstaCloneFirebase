@@ -40,14 +40,17 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         postsCollectionView.delegate = self
         postsCollectionView.dataSource = self
         
-        getPostsFromFirestore()
-        getUserDataFromFirestore()
-        
         refreshControll.attributedTitle = NSAttributedString(string: "Pull to refresh")
         refreshControll.addTarget(self, action: #selector(self.refresh(_:)), for: .valueChanged)
         postsCollectionView.addSubview(refreshControll)
         
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        getPostsFromFirestore()
+        getUserDataFromFirestore()
+    }
+
     
     @objc func refresh(_ sender: AnyObject){
         postsCollectionView.reloadData()
