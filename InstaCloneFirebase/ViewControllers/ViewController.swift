@@ -16,9 +16,15 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
-    }
-        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(UIInputViewController.dismissKeyboard))
+        view.addGestureRecognizer(tap)
+       
+   }
+   
+   @objc func dismissKeyboard() {
+       view.endEditing(true)
+   }
+    
     @IBAction func signInClicked(_ sender: Any) {
         if(emailText.text != "" && passwordText.text != ""){
             Auth.auth().signIn(withEmail: emailText.text!, password: passwordText.text!) { (authData, error) in
