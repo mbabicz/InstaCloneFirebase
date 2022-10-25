@@ -20,7 +20,6 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     
     @IBOutlet weak var postsCollectionView: UICollectionView!
     
-    var username = String()
     var userID = String()
 
     @IBOutlet weak var profileImage: UIImageView!
@@ -41,27 +40,13 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         postsCollectionView.delegate = self
         postsCollectionView.dataSource = self
         
-        getDataFromFirestore()
+        getPostsFromFirestore()
+        getUserDataFromFirestore()
         
         refreshControll.attributedTitle = NSAttributedString(string: "Pull to refresh")
         refreshControll.addTarget(self, action: #selector(self.refresh(_:)), for: .valueChanged)
-        postsCollectionView.addSubview(refreshControll)        
+        postsCollectionView.addSubview(refreshControll)
         
-        
-
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        loadUsernameLabel()
-        loadNumberOfPosts()
-        loadNumberOfFollowers()
-        loadNumberOfFollowing()
-        loadDescription()
-        //loadProfileImage()
-    }
-    
-    override func viewWillLayoutSubviews() {
-        loadProfileImage()
     }
     
     @objc func refresh(_ sender: AnyObject){
@@ -72,63 +57,42 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         performSegue(withIdentifier: "toProfileSettings", sender: nil)
     }
     
-    func loadUsernameLabel(){
-        
+    
+    func getUserDataFromFirestore(){
         let ref = firestoreDatabase.collection("Users").document(userID)
         ref.getDocument { document, error in
             guard let document = document, document.exists else{ return }
             let dataDescription = document.data()
-            self.username = dataDescription?["username"] as! String
-            self.usernameLabel.text = self.username
-        }
-    }
-    
-    func loadNumberOfPosts(){
-        
-        
-        self.postsLabel.text = String(1)
-    }
-    
-    func loadNumberOfFollowers(){
-        
-        self.followersLabel.text = String(2)
-    }
-    
-    func loadNumberOfFollowing(){
-        
-        self.followingLabel.text = String(3)
-    }
-    
-    func loadDescription(){
-        let ref = firestoreDatabase.collection("Users").document(userID)
-        ref.getDocument { document, error in
-            guard let document = document, document.exists else{ return }
-            let dataDescription = document.data()
-            var userDescription = dataDescription?["description"] as! String
-            self.descriptionLabel.text = userDescription
-        }
-        
-    }
-    
-    func loadProfileImage(){
-        let ref = firestoreDatabase.collection("Users").document(userID)
-        ref.getDocument { document, error in
-            guard let document = document, document.exists else { return }
-            let dataDescription = document.data()
-            var userImage = dataDescription?["profile picture"] as! String
+            
+            if let username = dataDescription?["username"] as? String{
+                self.usernameLabel.text = username
+            }
+
+            if let description = dataDescription?["description"] as? String{
+                self.descriptionLabel.text = description
+            }
+            
             let transformer = SDImageResizingTransformer(size: CGSize(width: 120,height: 120), scaleMode: .fill)
-            self.profileImage.sd_setImage(with:URL(string: userImage) ,placeholderImage: nil, context: [.imageTransformer: transformer])
-            self.makeRounded(picture: self.profileImage)
+            if let userImage = dataDescription?["profile picture"] as? String{
+                self.profileImage.sd_setImage(with:URL(string: userImage) ,placeholderImage: nil, context: [.imageTransformer: transformer])
+                self.makeRounded(picture: self.profileImage)
+            }
+            
+            //tbc
+            self.postsLabel.text = String(1)
+            self.followersLabel.text = String(2)
+            self.followingLabel.text = String(3)
+
         }
-        
+
     }
+ 
     
-    func getDataFromFirestore(){
-        
-        firestoreDatabase.collection("Posts").whereField("postedByUID", isEqualTo: userID).order(by: "date", descending: true ).addSnapshotListener { (snapshot, error) in
+    func getPostsFromFirestore(){
+        let ref =         firestoreDatabase.collection("Posts").whereField("postedByUID", isEqualTo: userID).order(by: "date", descending: true )
+        ref.addSnapshotListener { (snapshot, error) in
             if error != nil{
-                print(error?.localizedDescription)
-                
+                print(error?.localizedDescription as Any)
             }
             else{
                 if(snapshot?.isEmpty != true && snapshot != nil){
@@ -145,13 +109,13 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
                         if let imageUrl = document.get("imageUrl") as? String{
                             self.userImagesArray.append(imageUrl)
                         }
-                        
                     }
+                    
                     self.postsCollectionView.reloadData()
-                    //self.tableView.reloadData()
                 }
             }
         }
+        
     }
     
     func makeRounded(picture : UIImageView){
@@ -173,8 +137,6 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = postsCollectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! PostsCell
-        //cell.postsImageView.sd_setImage(with: URL(string: self.userImagesArray[indexPath.row]))
-        
         let transformer = SDImageResizingTransformer(size: CGSize(width: 128,height: 128), scaleMode: .fill)
         cell.postsImageView.sd_setImage(with: URL(string: self.userImagesArray[indexPath.row]), placeholderImage: nil, context: [.imageTransformer: transformer])
         
@@ -185,7 +147,6 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         chosenPostID = documentIdArray[indexPath.row]
-
         performSegue(withIdentifier: "toDetailedPostVC", sender: self)
     }
     
@@ -193,9 +154,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         if segue.identifier == "toDetailedPostVC"{
             let destinationTableView = segue.destination as! DetailedPostViewController
             destinationTableView.chosenPostID = chosenPostID
-            
         }
     }
-
 
 }

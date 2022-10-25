@@ -24,6 +24,21 @@ class FeedCell: UITableViewCell {
     
     let firestoreDatabase = Firestore.firestore()
 
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        // Initialization code
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        setPostOwnerProfileImage()
+    }
+
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+
+        // Configure the view for the selected state
+    }
     
     @IBAction func likeButton(_ sender: Any) {
         
@@ -73,21 +88,21 @@ class FeedCell: UITableViewCell {
                 }
             }
         }
+        
     }
     
-    func setPostedByProfileImage(){
-        
-
+    func setPostOwnerProfileImage(){
         
         let ref = firestoreDatabase.collection("Users").document(self.postedByUIDLabel.text!)
             ref.getDocument { document, error in
             guard let document = document, document.exists else{ return }
-            let dataDescription = document.data()
-            let imageUrl = dataDescription?["profile picture"] as! String
             let transformer = SDImageResizingTransformer(size: CGSize(width: 120,height: 120), scaleMode: .fill)
+            let dataDescription = document.data()
                 
-            self.userProfilePicture.sd_setImage(with: URL(string: imageUrl), placeholderImage: nil, context: [.imageTransformer: transformer])
-            self.makeRounded(picture: self.userProfilePicture)
+            if let imageUrl = dataDescription?["profile picture"] as? String{
+                self.userProfilePicture.sd_setImage(with: URL(string: imageUrl), placeholderImage: nil, context: [.imageTransformer: transformer])
+                self.makeRounded(picture: self.userProfilePicture)
+            }
         }
         
     }
@@ -101,20 +116,6 @@ class FeedCell: UITableViewCell {
     }
     
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        setPostedByProfileImage()
-    }
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
 
 }

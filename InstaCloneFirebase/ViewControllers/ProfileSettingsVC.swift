@@ -21,15 +21,6 @@ class ProfileSettingsVC: UIViewController, UIImagePickerControllerDelegate, UINa
 
     let userID = Auth.auth().currentUser!.uid
     
-    @IBAction func saveButton(_ sender: Any) {
-        let description = ["description" : descriptionTextField.text!] as [String : Any]
-        firestoreDatabase.collection("Users").document(userID).setData(description, merge: true)
-        saveNewProfilePicture()
-
-        performSegue(withIdentifier: "toProfileVC", sender: nil)
-        //makeAlert(titleInput: "DONE", messageInput: "")
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         loadProfileImage()
@@ -37,6 +28,14 @@ class ProfileSettingsVC: UIViewController, UIImagePickerControllerDelegate, UINa
         changeProfilePictureLabel.isUserInteractionEnabled = true
         let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(chooseImage))
         changeProfilePictureLabel.addGestureRecognizer(gestureRecognizer)
+    }
+    
+    @IBAction func saveButton(_ sender: Any) {
+        let description = ["description" : descriptionTextField.text!] as [String : Any]
+        firestoreDatabase.collection("Users").document(userID).setData(description, merge: true)
+        saveNewProfilePicture()
+
+        performSegue(withIdentifier: "toProfileVC", sender: nil)
     }
     
     @objc func chooseImage(){
@@ -51,6 +50,7 @@ class ProfileSettingsVC: UIViewController, UIImagePickerControllerDelegate, UINa
         profileImage.image = info[.originalImage] as? UIImage
         self.dismiss(animated: true, completion: nil)
     }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toProfileVC"{
             if let destVC = segue.destination as? UITabBarController{
@@ -62,11 +62,12 @@ class ProfileSettingsVC: UIViewController, UIImagePickerControllerDelegate, UINa
         let ref = firestoreDatabase.collection("Users").document(userID)
         ref.getDocument { document, error in
             guard let document = document, document.exists else { return }
-            let dataDescription = document.data()
-            var userImage = dataDescription?["profile picture"] as! String
             let transformer = SDImageResizingTransformer(size: CGSize(width: 180,height: 180), scaleMode: .fill)
-            self.profileImage.sd_setImage(with:URL(string: userImage), placeholderImage: nil, context: [.imageTransformer: transformer])
-            self.makeRounded(picture: self.profileImage)
+            let dataDescription = document.data()
+            if let userImage = dataDescription?["profile picture"] as? String{
+                self.profileImage.sd_setImage(with:URL(string: userImage), placeholderImage: nil, context: [.imageTransformer: transformer])
+                self.makeRounded(picture: self.profileImage)
+            }
         }
     }
     
@@ -99,15 +100,12 @@ class ProfileSettingsVC: UIViewController, UIImagePickerControllerDelegate, UINa
                             docRef.setData(newImageURL, merge: true)
                             
                         }
-                        
-                        
                     }
                 }
             }
         }
+        
     }
-    
-    
     
     func makeAlert(titleInput:String, messageInput:String){
         let alert = UIAlertController(title: titleInput, message: messageInput, preferredStyle: UIAlertController.Style.alert)
@@ -115,6 +113,5 @@ class ProfileSettingsVC: UIViewController, UIImagePickerControllerDelegate, UINa
         alert.addAction(okButton)
         self.present(alert, animated:true, completion: nil)
     }
-    
 
 }

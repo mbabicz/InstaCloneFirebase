@@ -15,10 +15,6 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
     
     var postsArray = [String]()
     var documentIdArray = [String]()
-
-    
-    
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,7 +23,6 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
         ranadomPostsCollectionView.delegate = self
         ranadomPostsCollectionView.dataSource = self
 
-        // Do any additional setup after loading the view.
     }
     
     func getDataFromFirestore(){
@@ -35,7 +30,7 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
         let fireStoreDatabase = Firestore.firestore()
         fireStoreDatabase.collection("Posts").order(by: "date", descending: true ).addSnapshotListener { (snapshot, error) in
             if error != nil{
-                print(error?.localizedDescription)
+                print(error?.localizedDescription as Any)
                 
             }
             else{
@@ -61,6 +56,7 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
         }
     }
     
+    
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
@@ -72,7 +68,6 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = ranadomPostsCollectionView.dequeueReusableCell(withReuseIdentifier: "PostCell", for: indexPath) as! RandomPostCell
 
-        
         let transformer = SDImageResizingTransformer(size: CGSize(width: 128,height: 128), scaleMode: .fill)
         cell.postImageView.sd_setImage(with: URL(string: self.postsArray[indexPath.row]), placeholderImage: nil, context: [.imageTransformer: transformer])
         
