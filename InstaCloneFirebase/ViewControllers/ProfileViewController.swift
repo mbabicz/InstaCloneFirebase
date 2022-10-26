@@ -40,9 +40,6 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         postsCollectionView.delegate = self
         postsCollectionView.dataSource = self
         
-        refreshControll.attributedTitle = NSAttributedString(string: "Pull to refresh")
-        refreshControll.addTarget(self, action: #selector(self.refresh(_:)), for: .valueChanged)
-        postsCollectionView.addSubview(refreshControll)
         
     }
     
@@ -51,10 +48,6 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         getUserDataFromFirestore()
     }
 
-    
-    @objc func refresh(_ sender: AnyObject){
-        postsCollectionView.reloadData()
-    }
 
     @IBAction func profileSettingsButton(_ sender: Any) {
         performSegue(withIdentifier: "toProfileSettings", sender: nil)
