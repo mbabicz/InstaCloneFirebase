@@ -21,20 +21,49 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
     var userImageArray = [String]()
     var documentIdArray = [String]()
     var postedByUIDArray = [String]()
+    var userID = String()
 
+    @IBOutlet weak var profileImage: UIImageView!
+    var img = UIImage()
     
     let firestoreDatabase = Firestore.firestore()
+    
 
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        userID = Auth.auth().currentUser!.uid
+
         
         tableView.delegate = self
         tableView.dataSource = self
         
         getDataFromFirestore()
+        
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setupTabBarIcons()
+    }
+
+    func setupTabBarIcons() {
+        templateTabBar(unselectedImage: UIImage(named: "home_unselected")!, selectedImage: UIImage(named: "home_selected")!, tabBarIndex: 0)
+        templateTabBar(unselectedImage: UIImage(named: "search_unselected")!, selectedImage: UIImage(named: "search_selected")!, tabBarIndex: 1)
+        templateTabBar(unselectedImage: UIImage(named: "plus_unselected")!, selectedImage: UIImage(named: "plus_selected")!, tabBarIndex: 2)
+        templateTabBar(unselectedImage: UIImage(named: "like_unselected")!, selectedImage: UIImage(named: "like_selected")!, tabBarIndex: 3)
+        templateTabBar(unselectedImage: UIImage(named: "profile_unselected")!, selectedImage: UIImage(named: "profile_selected")!, tabBarIndex: 4)
+
+    }
+    
+    private func templateTabBar(unselectedImage: UIImage, selectedImage: UIImage, tabBarIndex: Int) {
+        let ref =  tabBarController?.tabBar.items![tabBarIndex]
+        ref!.image = unselectedImage.withTintColor(UIColor.black, renderingMode: .alwaysOriginal)
+        ref!.selectedImage = selectedImage.withTintColor(UIColor.black, renderingMode: .alwaysOriginal)
+        ref!.imageInsets = UIEdgeInsets(top: 6, left: 0, bottom: -6, right: 0)
+        ref!.title = " "
+    }
+    
     
     func getDataFromFirestore(){
            
@@ -106,4 +135,13 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
         return cell
     }
 
+    
+    
+    func makeRounded(picture : UIImageView){
+        picture.layer.borderWidth = 1.0
+        picture.layer.masksToBounds = false
+        picture.layer.borderColor = UIColor.white.cgColor
+        picture.layer.cornerRadius = picture.frame.size.width / 2
+        picture.clipsToBounds = true
+    }
 }

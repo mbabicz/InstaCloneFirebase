@@ -30,6 +30,16 @@ class ProfileSettingsVC: UIViewController, UIImagePickerControllerDelegate, UINa
         changeProfilePictureLabel.addGestureRecognizer(gestureRecognizer)
     }
     
+    @IBAction func logOutClicked(_ sender: Any) {
+        do{
+            try Auth.auth().signOut()
+            self.performSegue(withIdentifier: "toViewController", sender: nil)
+
+            } catch{
+                print("error")
+            }
+    }
+    
     @IBAction func saveButton(_ sender: Any) {
         let description = ["description" : descriptionTextField.text!] as [String : Any]
         firestoreDatabase.collection("Users").document(userID).setData(description, merge: true)

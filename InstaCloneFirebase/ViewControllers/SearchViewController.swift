@@ -15,6 +15,8 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
     
     var postsArray = [String]()
     var documentIdArray = [String]()
+    var chosenPostID = " "
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -73,5 +75,20 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
         
         return cell
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        chosenPostID = documentIdArray[indexPath.row]
+        performSegue(withIdentifier: "toDetailedPostVC", sender: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "toDetailedPostVC"{
+            let destinationTableView = segue.destination as! DetailedPostViewController
+            destinationTableView.chosenPostID = chosenPostID
+        }
+    }
+    
+    
 
 }
