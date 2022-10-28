@@ -126,7 +126,7 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         cell.usernameLabel.text = userEmailArray[indexPath.row]
         
-        let transformer = SDImageResizingTransformer(size: CGSize(width: 120,height: 120), scaleMode: .fill)
+        //let transformer = SDImageResizingTransformer(size: CGSize(width: 120,height: 120), scaleMode: .fill)
 
         cell.postedByUIDLabel.text = postedByUIDArray[indexPath.row]
 
