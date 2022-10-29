@@ -26,8 +26,11 @@ class ProfileSettingsVC: UIViewController, UIImagePickerControllerDelegate, UINa
         loadProfileImage()
 
         changeProfilePictureLabel.isUserInteractionEnabled = true
+        profileImage.isUserInteractionEnabled = true
+        
         let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(chooseImage))
         changeProfilePictureLabel.addGestureRecognizer(gestureRecognizer)
+        profileImage.addGestureRecognizer(gestureRecognizer)
     }
     
     @IBAction func logOutClicked(_ sender: Any) {
@@ -57,10 +60,13 @@ class ProfileSettingsVC: UIViewController, UIImagePickerControllerDelegate, UINa
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        
         profileImage.image = info[.originalImage] as? UIImage
+        self.makeRounded(picture: self.profileImage)
+
         self.dismiss(animated: true, completion: nil)
     }
-    
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toProfileVC"{
             if let destVC = segue.destination as? UITabBarController{
