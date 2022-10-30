@@ -69,8 +69,9 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
             }
             
             let transformer = SDImageResizingTransformer(size: CGSize(width: 120,height: 120), scaleMode: .fill)
-            if let userImage = dataDescription?["profile picture"] as? String{
-                self.profileImage.sd_setImage(with:URL(string: userImage) ,placeholderImage: nil, context: [.imageTransformer: transformer])
+           if let userImage = dataDescription?["profile picture"] as? String{
+                self.profileImage.sd_setImage(with:URL(string: userImage) ,placeholderImage: nil, context: nil /*[.imageTransformer: transformer]*/)
+                self.profileImage.contentMode = .scaleAspectFill
                 self.makeRounded(picture: self.profileImage)
             }
             
@@ -133,9 +134,9 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = postsCollectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! PostsCell
-        let transformer = SDImageResizingTransformer(size: CGSize(width: 128,height: 128), scaleMode: .fill)
-        cell.postsImageView.sd_setImage(with: URL(string: self.userImagesArray[indexPath.row]), placeholderImage: nil, context: [.imageTransformer: transformer])
-        
+
+        cell.postsImageView.sd_setImage(with: URL(string: self.userImagesArray[indexPath.row]), placeholderImage: nil, context: nil)
+        cell.postsImageView.contentMode = .scaleAspectFill
         return cell
     }
     

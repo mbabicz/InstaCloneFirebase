@@ -48,10 +48,11 @@ class DetailedPostViewController: UIViewController {
             let ref = self.firestoreDatabase.collection("Users").document(self.postOwnerID)
             ref.getDocument{ document, error in
                 guard let document = document, document.exists else { return }
-                let transformer = SDImageResizingTransformer(size: CGSize(width: 35, height: 32), scaleMode: .fill)
+
                 let dataDescription = document.data()
                 if let profilePictureURL = dataDescription?["profile picture"] as? String{
-                    self.profileImage.sd_setImage(with: URL(string: profilePictureURL), placeholderImage: nil, context: [.imageTransformer: transformer])
+                    self.profileImage.sd_setImage(with: URL(string: profilePictureURL), placeholderImage: nil, context: nil)
+                    self.profileImage.contentMode = .scaleAspectFill
                     self.makeRounded(picture: self.profileImage)
 
                 }
@@ -70,9 +71,9 @@ class DetailedPostViewController: UIViewController {
             guard let document = document, document.exists else { return }
             let dataDescription = document.data()
             
-            let transformer = SDImageResizingTransformer(size: CGSize(width: 390, height: 290), scaleMode: .fill)
             if let imageURL = dataDescription?["imageUrl"] as? String{
-                self.postImage.sd_setImage(with:URL(string: imageURL), placeholderImage:  nil, context: [.imageTransformer: transformer])
+                self.postImage.sd_setImage(with:URL(string: imageURL), placeholderImage:  nil, context: nil)
+                self.postImage.contentMode = .scaleAspectFill
             }
             
             if let description = dataDescription?["commentText"] as? String{

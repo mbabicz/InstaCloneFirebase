@@ -61,9 +61,11 @@ class ProfileSettingsVC: UIViewController, UIImagePickerControllerDelegate, UINa
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
-        profileImage.image = info[.originalImage] as? UIImage
+        //profileImage.image = info[.originalImage] as? UIImage
+        let newImage = info[.originalImage] as? UIImage
+        profileImage.image = newImage
+        profileImage.contentMode = .scaleAspectFill
         self.makeRounded(picture: self.profileImage)
-
         self.dismiss(animated: true, completion: nil)
     }
 
@@ -87,14 +89,14 @@ class ProfileSettingsVC: UIViewController, UIImagePickerControllerDelegate, UINa
         }
     }
     
-    
+
     func makeRounded(picture : UIImageView){
         picture.layer.borderWidth = 1.0
         picture.layer.masksToBounds = false
         picture.layer.borderColor = UIColor.white.cgColor
         picture.layer.cornerRadius = picture.frame.size.width / 2
         picture.clipsToBounds = true
-    }
+        }
 
     func saveNewProfilePicture(){
         let storage = Storage.storage()

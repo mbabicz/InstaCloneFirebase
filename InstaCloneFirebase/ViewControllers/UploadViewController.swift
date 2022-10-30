@@ -22,6 +22,7 @@ class UploadViewController: UIViewController, UIImagePickerControllerDelegate, U
         selectImage.isUserInteractionEnabled = true
         let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(chooseImage))
         selectImage.addGestureRecognizer(gestureRecognizer)
+        selectImage.image = UIImage(named: "plus_photo.png")
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(UIInputViewController.dismissKeyboard))
         view.addGestureRecognizer(tap)
@@ -92,7 +93,7 @@ class UploadViewController: UIViewController, UIImagePickerControllerDelegate, U
                                         self.makeAlert(titleInput: "Error", messageInput: error?.localizedDescription ?? "Error")
                                     }
                                     else {
-                                        self.selectImage.image = UIImage(named: "select.png")
+                                        self.selectImage.image = UIImage(named: "plus_photo.png")
                                         self.commentText.text = ""
                                         self.tabBarController?.selectedIndex = 0
                                         self.makeAlert(titleInput: "DONE!", messageInput: " ")

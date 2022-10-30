@@ -97,11 +97,13 @@ class FeedCell: UITableViewCell {
         let ref = firestoreDatabase.collection("Users").document(self.postedByUIDLabel.text!)
             ref.getDocument { document, error in
             guard let document = document, document.exists else{ return }
-            let transformer = SDImageResizingTransformer(size: CGSize(width: 120,height: 120), scaleMode: .fill)
+
             let dataDescription = document.data()
                 
             if let imageUrl = dataDescription?["profile picture"] as? String{
-                self.userProfilePicture.sd_setImage(with: URL(string: imageUrl), placeholderImage: nil, context: [.imageTransformer: transformer])
+                self.userProfilePicture.sd_setImage(with: URL(string: imageUrl), placeholderImage: nil, context: nil)
+                self.userProfilePicture.contentMode = .scaleAspectFill
+
                 self.makeRounded(picture: self.userProfilePicture)
             }
         }

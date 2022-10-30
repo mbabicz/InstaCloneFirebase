@@ -430,10 +430,11 @@
                                 </buttonConfiguration>
                                 <connections>
                                     <action selector="logOutClicked:" destination="llI-94-bLS" eventType="touchUpInside" id="DTz-He-8Mz"/>
+                                    <segue destination="BYZ-38-t0r" kind="presentation" identifier="toViewController" modalPresentationStyle="fullScreen" id="YVU-9S-L9V"/>
                                 </connections>
                             </button>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Xue-kF-rit">
-                                <rect key="frame" x="107" y="20" width="180" height="180"/>
+                                <rect key="frame" x="117" y="20" width="180" height="180"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                         </subviews>
@@ -502,7 +503,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="M3h-qf-B11">
-                                <rect key="frame" x="0.0" y="109" width="414" height="704"/>
+                                <rect key="frame" x="0.0" y="92" width="414" height="721"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="1" minimumInteritemSpacing="1" id="AgG-2f-7nK">
@@ -532,6 +533,12 @@
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="50U-H7-qm5">
+                                <rect key="frame" x="329" y="53" width="77" height="35"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Cancel"/>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="234-fj-AUy"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -705,6 +712,7 @@
     <inferredMetricsTieBreakers>
         <segue reference="thN-PW-21m"/>
         <segue reference="4YU-PB-Hru"/>
+        <segue reference="YVU-9S-L9V"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="f.circle.fill" catalog="system" width="128" height="123"/>

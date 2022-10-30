@@ -70,9 +70,8 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = ranadomPostsCollectionView.dequeueReusableCell(withReuseIdentifier: "PostCell", for: indexPath) as! RandomPostCell
 
-        let transformer = SDImageResizingTransformer(size: CGSize(width: 128,height: 128), scaleMode: .fill)
-        cell.postImageView.sd_setImage(with: URL(string: self.postsArray[indexPath.row]), placeholderImage: nil, context: [.imageTransformer: transformer])
-        
+        cell.postImageView.sd_setImage(with: URL(string: self.postsArray[indexPath.row]), placeholderImage: nil, context: nil)
+        cell.postImageView.contentMode = .scaleAspectFill
         return cell
     }
     
