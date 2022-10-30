@@ -73,7 +73,7 @@ class DetailedPostViewController: UIViewController {
             
             if let imageURL = dataDescription?["imageUrl"] as? String{
                 self.postImage.sd_setImage(with:URL(string: imageURL), placeholderImage:  nil, context: nil)
-                self.postImage.contentMode = .scaleAspectFill
+                self.postImage.contentMode = .scaleAspectFit
             }
             
             if let description = dataDescription?["commentText"] as? String{

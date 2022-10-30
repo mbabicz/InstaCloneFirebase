@@ -19,12 +19,13 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
     
     var postsArray = [String]()
     var documentIdArray = [String]()
-    var chosenPostID = " "
+    var chosenPostID = String()
     let firestoreDatabase = Firestore.firestore()
     
     var usersIDArray = [String]()
     var usernamesArray = [String]()
     var filteredData = [String]()
+    var chosenUserID = String()
 
 
 
@@ -130,6 +131,10 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
             let destinationTableView = segue.destination as! DetailedPostViewController
             destinationTableView.chosenPostID = chosenPostID
         }
+        if segue.identifier == "toDetailedProfileVC"{
+            let destinationTableView = segue.destination as! DetailedProfileViewController
+            destinationTableView.chosenUserID = chosenUserID
+        }
     }
     
     //MARK: usersTableView config
@@ -149,11 +154,12 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
     }
     
     func tableView(_ usersTableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        chosenLandmarkName = landmarkNames[indexPath.row]
-//        chosenLandmarkImage = landmarkImages[indexPath.row]
-//
-//        performSegue(withIdentifier: "toDetailsTableView", sender: nil)
+        //chosenLandmarkName = landmarkNames[indexPath.row]
+        chosenUserID = usersIDArray[indexPath.row]
+        performSegue(withIdentifier: "toDetailedProfileVC", sender: nil)
     }
+    
+
     
     //MARK: searchBar config
     

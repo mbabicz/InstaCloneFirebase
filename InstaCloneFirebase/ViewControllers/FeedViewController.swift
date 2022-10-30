@@ -129,7 +129,7 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
         cell.postedByUIDLabel.text = postedByUIDArray[indexPath.row]
 
         cell.userImageView.sd_setImage(with:URL(string: self.userImageArray[indexPath.row]))
-        cell.userImageView.contentMode = .scaleAspectFill
+        cell.userImageView.contentMode = .scaleAspectFit
 
         cell.documentIdLabel.text = documentIdArray[indexPath.row]
         return cell
