@@ -9,7 +9,7 @@ import UIKit
 import Firebase
 import SDWebImage
 
-class DetailedProfileViewController: UIViewController {
+class DetailedProfileViewController: UIViewController,UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var userIDLabel: UILabel!
@@ -23,13 +23,20 @@ class DetailedProfileViewController: UIViewController {
     
     var chosenUserID = String()
     let firestoreDatabase = Firestore.firestore()
+    
+    var userImagesArray = [String]()
+    var documentIdArray = [String]()
 
     
     override func viewDidLoad() {
         super.viewDidLoad()
         userIDLabel.text = chosenUserID
+        
+        postsCollectionView.delegate = self
+        postsCollectionView.dataSource = self
 
         getUserDataFromFirestore()
+        getPostsFromFirestore()
     }
     
     func getUserDataFromFirestore(){
@@ -61,6 +68,37 @@ class DetailedProfileViewController: UIViewController {
 
     }
     
+    func getPostsFromFirestore(){
+        let ref =         firestoreDatabase.collection("Posts").whereField("postedByUID", isEqualTo: chosenUserID).order(by: "date", descending: true )
+        ref.addSnapshotListener { (snapshot, error) in
+            if error != nil{
+                print(error?.localizedDescription as Any)
+            }
+            else{
+                if(snapshot?.isEmpty != true && snapshot != nil){
+                    
+                    self.userImagesArray.removeAll(keepingCapacity: false)
+                    self.documentIdArray.removeAll(keepingCapacity: false)
+                    
+                    
+                    for document in snapshot!.documents{
+                        let documentID = document.documentID
+                        self.documentIdArray.append(documentID)
+                        
+                        //getting value of postedBy in firebase structure
+                        if let imageUrl = document.get("imageUrl") as? String{
+                            self.userImagesArray.append(imageUrl)
+                        }
+                    }
+                    
+                    self.postsCollectionView.reloadData()
+                }
+            }
+        }
+        
+    }
+    
+    
     func makeRounded(picture : UIImageView){
         picture.layer.borderWidth = 1.0
         picture.layer.masksToBounds = false
@@ -68,6 +106,30 @@ class DetailedProfileViewController: UIViewController {
         picture.layer.cornerRadius = picture.frame.size.width / 2
         picture.clipsToBounds = true
     }
+    
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return userImagesArray.count
+    }
+
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = postsCollectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! PostsCell
+
+        cell.postsImageView.sd_setImage(with: URL(string: self.userImagesArray[indexPath.row]), placeholderImage: nil, context: nil)
+        cell.postsImageView.contentMode = .scaleAspectFill
+        return cell
+    }
+    
+    
+//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+//
+//        chosenPostID = documentIdArray[indexPath.row]
+//        performSegue(withIdentifier: "toDetailedPostVC", sender: self)
+//    }
 
 
 }
