@@ -9,7 +9,7 @@ import UIKit
 import Firebase
 import SDWebImage
 
-class DetailedProfileViewController: UIViewController,UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class DetailedProfileViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
 
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var userIDLabel: UILabel!
@@ -26,6 +26,8 @@ class DetailedProfileViewController: UIViewController,UICollectionViewDelegate, 
     
     var userImagesArray = [String]()
     var documentIdArray = [String]()
+    var chosenPostID = String()
+
 
     
     override func viewDidLoad() {
@@ -69,7 +71,7 @@ class DetailedProfileViewController: UIViewController,UICollectionViewDelegate, 
     }
     
     func getPostsFromFirestore(){
-        let ref =         firestoreDatabase.collection("Posts").whereField("postedByUID", isEqualTo: chosenUserID).order(by: "date", descending: true )
+        let ref = firestoreDatabase.collection("Posts").whereField("postedByUID", isEqualTo: chosenUserID).order(by: "date", descending: true )
         ref.addSnapshotListener { (snapshot, error) in
             if error != nil{
                 print(error?.localizedDescription as Any)
@@ -85,7 +87,6 @@ class DetailedProfileViewController: UIViewController,UICollectionViewDelegate, 
                         let documentID = document.documentID
                         self.documentIdArray.append(documentID)
                         
-                        //getting value of postedBy in firebase structure
                         if let imageUrl = document.get("imageUrl") as? String{
                             self.userImagesArray.append(imageUrl)
                         }
@@ -95,7 +96,6 @@ class DetailedProfileViewController: UIViewController,UICollectionViewDelegate, 
                 }
             }
         }
-        
     }
     
     
@@ -125,11 +125,17 @@ class DetailedProfileViewController: UIViewController,UICollectionViewDelegate, 
     }
     
     
-//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//
-//        chosenPostID = documentIdArray[indexPath.row]
-//        performSegue(withIdentifier: "toDetailedPostVC", sender: self)
-//    }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 
+        chosenPostID = documentIdArray[indexPath.row]
+        performSegue(withIdentifier: "toDetailedPostVC", sender: self)
+    }
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "toDetailedPostVC"{
+            let destinationTableView = segue.destination as! DetailedPostViewController
+            destinationTableView.chosenPostID = chosenPostID
+        }
+    }
 
 }

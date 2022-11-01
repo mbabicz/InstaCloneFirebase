@@ -16,18 +16,13 @@ class DetailedPostViewController: UIViewController {
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var postDescription: UILabel!
     @IBOutlet weak var postImage: UIImageView!
-    
     @IBOutlet weak var likesLabel: UILabel!
-    
-    
     
     var chosenPostID = ""
     let firestoreDatabase = Firestore.firestore()
     var userID = String()
     var postOwnerID = String()
-
-
-
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,15 +45,16 @@ class DetailedPostViewController: UIViewController {
                 guard let document = document, document.exists else { return }
 
                 let dataDescription = document.data()
+                
                 if let profilePictureURL = dataDescription?["profile picture"] as? String{
                     self.profileImage.sd_setImage(with: URL(string: profilePictureURL), placeholderImage: nil, context: nil)
                     self.profileImage.contentMode = .scaleAspectFill
                     self.makeRounded(picture: self.profileImage)
 
                 }
+                
                 if let username = dataDescription?["username"] as? String{
                     self.usernameLabel.text = username
-
                 }
             }
         }

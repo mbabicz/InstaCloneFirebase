@@ -9,7 +9,7 @@ import UIKit
 import Firebase
 import SDWebImage
 
-class ProfileViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
+class ProfileViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource{
 
     
     @IBOutlet weak var usernameLabel: UILabel!
@@ -17,7 +17,6 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     @IBOutlet weak var followersLabel: UILabel!
     @IBOutlet weak var followingLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
-    
     @IBOutlet weak var postsCollectionView: UICollectionView!
     
     var userID = String()
@@ -26,7 +25,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     
     var userImagesArray = [String]()
     var documentIdArray = [String]()
-    var chosenPostID = " "
+    var chosenPostID = String()
     
     let firestoreDatabase = Firestore.firestore()
     let refreshControll = UIRefreshControl()
@@ -39,7 +38,6 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         
         postsCollectionView.delegate = self
         postsCollectionView.dataSource = self
-        
         
     }
     
@@ -68,9 +66,8 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
                 self.descriptionLabel.text = description
             }
             
-            let transformer = SDImageResizingTransformer(size: CGSize(width: 120,height: 120), scaleMode: .fill)
            if let userImage = dataDescription?["profile picture"] as? String{
-                self.profileImage.sd_setImage(with:URL(string: userImage) ,placeholderImage: nil, context: nil /*[.imageTransformer: transformer]*/)
+                self.profileImage.sd_setImage(with:URL(string: userImage) ,placeholderImage: nil, context: nil)
                 self.profileImage.contentMode = .scaleAspectFill
                 self.makeRounded(picture: self.profileImage)
             }
@@ -79,14 +76,13 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
             self.postsLabel.text = String(1)
             self.followersLabel.text = String(2)
             self.followingLabel.text = String(3)
-
         }
 
     }
  
     
     func getPostsFromFirestore(){
-        let ref =         firestoreDatabase.collection("Posts").whereField("postedByUID", isEqualTo: userID).order(by: "date", descending: true )
+        let ref = firestoreDatabase.collection("Posts").whereField("postedByUID", isEqualTo: userID).order(by: "date", descending: true )
         ref.addSnapshotListener { (snapshot, error) in
             if error != nil{
                 print(error?.localizedDescription as Any)
@@ -96,7 +92,6 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
                     
                     self.userImagesArray.removeAll(keepingCapacity: false)
                     self.documentIdArray.removeAll(keepingCapacity: false)
-                    
                     
                     for document in snapshot!.documents{
                         let documentID = document.documentID
@@ -133,6 +128,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
         let cell = postsCollectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! PostsCell
 
         cell.postsImageView.sd_setImage(with: URL(string: self.userImagesArray[indexPath.row]), placeholderImage: nil, context: nil)
@@ -142,7 +138,6 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
         chosenPostID = documentIdArray[indexPath.row]
         performSegue(withIdentifier: "toDetailedPostVC", sender: self)
     }

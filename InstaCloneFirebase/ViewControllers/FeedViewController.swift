@@ -13,7 +13,6 @@ import SDWebImage
 class FeedViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var tableView: UITableView!
-    
   
     var userEmailArray = [String]()
     var userCommentArray = [String]()
