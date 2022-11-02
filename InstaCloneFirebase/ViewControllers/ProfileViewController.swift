@@ -73,7 +73,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
             }
             
             //tbc
-            self.postsLabel.text = String(1)
+            self.postsLabel.text = String(self.userImagesArray.count)
             self.followersLabel.text = String(2)
             self.followingLabel.text = String(3)
         }

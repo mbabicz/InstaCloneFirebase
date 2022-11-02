@@ -15,7 +15,7 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
     
     @IBOutlet weak var usersTableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
-    
+    @IBOutlet weak var recentUsersTableView: UITableView!
     
     var postsArray = [String]()
     var documentIdArray = [String]()
@@ -40,10 +40,14 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
         usersTableView.delegate = self
         usersTableView.dataSource = self
         
+        recentUsersTableView.delegate = self
+        recentUsersTableView.dataSource = self
+        
         searchBar.delegate = self
         
         self.ranadomPostsCollectionView.isHidden = false
         self.usersTableView.isHidden = true
+        self.recentUsersTableView.isHidden = true
         filteredData = usernamesArray
         
     }
@@ -151,6 +155,17 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
     func tableView(_ usersTableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         chosenUserID = usersIDArray[indexPath.row]
         performSegue(withIdentifier: "toDetailedProfileVC", sender: nil)
+        //add user to recent list
+        addUserIntoRecentList()
+    }
+    
+    func addUserIntoRecentList(){
+        let loggedUserID = Auth.auth().currentUser!.uid
+        let ref = firestoreDatabase.collection("Users").document(loggedUserID).collection("Recently searched").document(chosenUserID)
+            ref.setData([
+                "userID" : chosenUserID,
+                "date" : FieldValue.serverTimestamp()
+            ])
     }
     
 }
@@ -163,7 +178,13 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
             
             if searchText == ""{
                 filteredData = usernamesArray
+                self.usersTableView.isHidden = true
+                self.recentUsersTableView.isHidden = false
+                //jesli self.recentUsersTableView.reloadData()
+                
             } else{
+                self.recentUsersTableView.isHidden = true
+                self.usersTableView.isHidden = false
                 for user in usernamesArray{
                     if user.lowercased().contains(searchText.lowercased()){
                         filteredData.append(user)
@@ -175,13 +196,15 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
         
         func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
             self.ranadomPostsCollectionView.isHidden = true
-            self.usersTableView.isHidden = false
+            self.recentUsersTableView.isHidden = false
+            self.usersTableView.isHidden = true
             self.usersTableView.reloadData()
             self.searchBar.setShowsCancelButton(true, animated: true)
         }
         
         func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
             self.ranadomPostsCollectionView.isHidden = false
+            self.recentUsersTableView.isHidden = true
             self.usersTableView.isHidden = true
             self.searchBar.endEditing(true)
             self.searchBar.setShowsCancelButton(false, animated: true)
