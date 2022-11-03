@@ -12,7 +12,6 @@ import Firebase
 class SearchViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var ranadomPostsCollectionView: UICollectionView!
-    
     @IBOutlet weak var usersTableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var recentUsersTableView: UITableView!
@@ -20,19 +19,28 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
     var postsArray = [String]()
     var documentIdArray = [String]()
     var chosenPostID = String()
-    let firestoreDatabase = Firestore.firestore()
-    
-    var usersIDArray = [String]()
-    var usernamesArray = [String]()
-    var filteredData = [String]()
     var chosenUserID = String()
+    var chosenUsername = String()
+
     
+    var usersID = [String]()
+    var usernames = [String]()
+    var filteredData = [String]()
     
+    var recentlySearchedIDs = [String]()
+    var recentlySearchedNames = [String]()
+    var recentlySearchedPictures = [String]()
+
+
+    let firestoreDatabase = Firestore.firestore()
+    let loggedUserID = Auth.auth().currentUser!.uid
     
     override func viewDidLoad() {
         super.viewDidLoad()
         getDataFromFirestore()
         getUsersFromFirestore()
+        getRecentlySearchedUsers()
+        //getDetailedUserInfo()
         
         ranadomPostsCollectionView.delegate = self
         ranadomPostsCollectionView.dataSource = self
@@ -48,8 +56,18 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
         self.ranadomPostsCollectionView.isHidden = false
         self.usersTableView.isHidden = true
         self.recentUsersTableView.isHidden = true
-        filteredData = usernamesArray
+        filteredData = usernames
         
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.navigationController?.setNavigationBarHidden(false, animated: animated)
     }
     
     func getUsersFromFirestore(){
@@ -58,36 +76,34 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
                 print(error?.localizedDescription as Any)
             } else {
                 if(snapshot?.isEmpty != true && snapshot != nil){
-                    self.usersIDArray.removeAll(keepingCapacity: false)
-                    self.usernamesArray.removeAll(keepingCapacity: false)
+                    
+                    self.usersID.removeAll(keepingCapacity: false)
+                    self.usernames.removeAll(keepingCapacity: false)
                     
                     for document in snapshot!.documents{
                         let userID = document.documentID
-                        self.usersIDArray.append(userID)
+                        self.usersID.append(userID)
                         
                         if let username = document.get("username") as? String{
-                            self.usernamesArray.append((username))
-                            print(username)
+                            self.usernames.append((username))
                         }
                     }
+                    self.usersTableView.reloadData()
                 }
             }
         }
     }
     
     func getDataFromFirestore(){
-        
         firestoreDatabase.collection("Posts").order(by: "date", descending: true ).addSnapshotListener { (snapshot, error) in
             if error != nil{
                 print(error?.localizedDescription as Any)
-                
             }
             else{
                 if(snapshot?.isEmpty != true && snapshot != nil){
                     
                     self.postsArray.removeAll(keepingCapacity: false)
                     self.documentIdArray.removeAll(keepingCapacity: false)
-                    
                     
                     for document in snapshot!.documents{
                         let documentID = document.documentID
@@ -96,7 +112,6 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
                         if let imageUrl = document.get("imageUrl") as? String{
                             self.postsArray.append(imageUrl)
                         }
-                        
                     }
                     self.ranadomPostsCollectionView.reloadData()
                 }
@@ -104,6 +119,31 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
         }
     }
     
+    func getRecentlySearchedUsers(){
+        firestoreDatabase.collection("Users").document(loggedUserID).collection("Recently searched").addSnapshotListener { snapshot, error in
+            if error != nil{
+                print(error?.localizedDescription as Any)
+            } else {
+                if(snapshot?.isEmpty != true && snapshot != nil){
+                    
+                    self.recentlySearchedIDs.removeAll(keepingCapacity: false)
+                    self.recentlySearchedNames.removeAll(keepingCapacity: false)
+                    self.recentlySearchedPictures.removeAll(keepingCapacity: false)
+                    
+                    for document in snapshot!.documents{
+                        if let userID = document.get("userID") as? String{
+                            self.recentlySearchedIDs.append(userID)
+                        }
+                    }
+                    self.recentUsersTableView.reloadData()
+                }
+            }
+        }
+        
+    }
+    
+    
+    //MARK: display all posts
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
@@ -126,6 +166,66 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
         performSegue(withIdentifier: "toDetailedPostVC", sender: self)
     }
     
+    //MARK: TableView config
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if tableView === usersTableView{
+            return filteredData.count
+            
+        } else if tableView === recentUsersTableView{
+            return recentlySearchedIDs.count
+        }
+        else { return 0 }
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = usersTableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath ) as! UserCell
+
+        if tableView === usersTableView{
+            
+            cell.usernameLabel.text = filteredData[indexPath.row]
+        } else if tableView === recentUsersTableView{
+            cell.userIDLabel.text = recentlySearchedIDs[indexPath.row]
+            //cell.usernameLabel.text = recentlySearchedNames[indexPath.row]
+            //cell.profileImage.sd_setImage(with: URL(string: self.recentlySearchedPictures[indexPath.row]), placeholderImage: nil, context: nil)
+            //cell.profileImage.contentMode = .scaleAspectFill
+            //self.makeRounded(picture: cell.profileImage)
+
+        }
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        chosenUserID = usersID[indexPath.row]
+        chosenUsername = usernames[indexPath.row]
+        
+        if tableView === usersTableView{
+            performSegue(withIdentifier: "toDetailedProfileVC", sender: nil)
+            addUserIntoRecentList()
+        } else if tableView === recentUsersTableView{
+            performSegue(withIdentifier: "toDetailedProfileVC", sender: nil)
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if tableView === recentUsersTableView{
+            return "Recently searched"
+        } else if tableView === usersTableView{
+            return nil
+        } else{
+            return nil
+        }
+    }
+    
+    func addUserIntoRecentList(){
+        let ref = firestoreDatabase.collection("Users").document(loggedUserID).collection("Recently searched").document(chosenUserID)
+            ref.setData([
+                "userID" : chosenUserID,
+                "username" : chosenUsername,
+                "date" : FieldValue.serverTimestamp()
+            ])
+    }
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toDetailedPostVC"{
             let destinationTableView = segue.destination as! DetailedPostViewController
@@ -134,42 +234,11 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
         if segue.identifier == "toDetailedProfileVC"{
             let destinationTableView = segue.destination as! DetailedProfileViewController
             destinationTableView.chosenUserID = chosenUserID
+            self.navigationItem.title = ""
         }
     }
     
-    //MARK: usersTableView config
-
-    func tableView(_ usersTableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        //return usersIDArray.count
-        return filteredData.count
-    }
-    
-    func tableView(_ usersTableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell()
-        var content = cell.defaultContentConfiguration()
-        content.text = filteredData[indexPath.row]
-        cell.contentConfiguration = content
-        return cell
-    }
-    
-    func tableView(_ usersTableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        chosenUserID = usersIDArray[indexPath.row]
-        performSegue(withIdentifier: "toDetailedProfileVC", sender: nil)
-        //add user to recent list
-        addUserIntoRecentList()
-    }
-    
-    func addUserIntoRecentList(){
-        let loggedUserID = Auth.auth().currentUser!.uid
-        let ref = firestoreDatabase.collection("Users").document(loggedUserID).collection("Recently searched").document(chosenUserID)
-            ref.setData([
-                "userID" : chosenUserID,
-                "date" : FieldValue.serverTimestamp()
-            ])
-    }
-    
 }
-    
     
     //MARK: searchBar config
     extension SearchViewController: UISearchBarDelegate{
@@ -177,15 +246,14 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
             filteredData = []
             
             if searchText == ""{
-                filteredData = usernamesArray
+                filteredData = usernames
                 self.usersTableView.isHidden = true
                 self.recentUsersTableView.isHidden = false
-                //jesli self.recentUsersTableView.reloadData()
-                
+                //self.recentUsersTableView.reloadData()
             } else{
                 self.recentUsersTableView.isHidden = true
                 self.usersTableView.isHidden = false
-                for user in usernamesArray{
+                for user in usernames{
                     if user.lowercased().contains(searchText.lowercased()){
                         filteredData.append(user)
                     }
@@ -208,5 +276,13 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
             self.usersTableView.isHidden = true
             self.searchBar.endEditing(true)
             self.searchBar.setShowsCancelButton(false, animated: true)
+        }
+        
+        func makeRounded(picture : UIImageView){
+            picture.layer.borderWidth = 1.0
+            picture.layer.masksToBounds = false
+            picture.layer.borderColor = UIColor.white.cgColor
+            picture.layer.cornerRadius = picture.frame.size.width / 2
+            picture.clipsToBounds = true
         }
     }

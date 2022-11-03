@@ -28,7 +28,8 @@ class DetailedProfileViewController: UIViewController, UICollectionViewDelegate,
     var documentIdArray = [String]()
     var chosenPostID = String()
 
-
+    @IBOutlet weak var backNavigationItem: UINavigationItem!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
