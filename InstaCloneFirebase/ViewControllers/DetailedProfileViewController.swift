@@ -27,6 +27,8 @@ class DetailedProfileViewController: UIViewController, UICollectionViewDelegate,
     var userImagesArray = [String]()
     var documentIdArray = [String]()
     var chosenPostID = String()
+    var loggedUserID = String()
+
 
     @IBOutlet weak var backNavigationItem: UINavigationItem!
     
@@ -40,6 +42,25 @@ class DetailedProfileViewController: UIViewController, UICollectionViewDelegate,
 
         getUserDataFromFirestore()
         getPostsFromFirestore()
+        
+        loggedUserID = Auth.auth().currentUser!.uid
+
+    }
+    
+    @IBAction func followButtonClicked(_ sender: Any) {
+        let ref = firestoreDatabase.collection("Users").document(loggedUserID).collection("Following").document(chosenUserID)
+        
+        ref.getDocument { document, error in
+            if let document = document, document.exists {
+                ref.delete()
+
+            }else{
+                ref.setData([
+                    "userID" : self.chosenUserID,
+                    "date of like" : FieldValue.serverTimestamp()
+                ])
+            }
+        }
     }
     
     func getUserDataFromFirestore(){

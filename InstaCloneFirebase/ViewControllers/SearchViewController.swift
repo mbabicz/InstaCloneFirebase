@@ -134,6 +134,9 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
                         if let userID = document.get("userID") as? String{
                             self.recentlySearchedIDs.append(userID)
                         }
+                        if let username = document.get("username") as? String{
+                            self.recentlySearchedNames.append(username)
+                        }
                     }
                     self.recentUsersTableView.reloadData()
                 }
@@ -173,20 +176,20 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
             return filteredData.count
             
         } else if tableView === recentUsersTableView{
-            return recentlySearchedIDs.count
+            return recentlySearchedNames.count
         }
         else { return 0 }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = usersTableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath ) as! UserCell
+        let cell = usersTableView.dequeueReusableCell(withIdentifier: "UserCell", for: indexPath ) as! UserCell
 
         if tableView === usersTableView{
             
             cell.usernameLabel.text = filteredData[indexPath.row]
         } else if tableView === recentUsersTableView{
-            cell.userIDLabel.text = recentlySearchedIDs[indexPath.row]
-            //cell.usernameLabel.text = recentlySearchedNames[indexPath.row]
+            //cell.userIDLabel.text = recentlySearchedIDs[indexPath.row]
+            cell.usernameLabel.text = recentlySearchedNames[indexPath.row]
             //cell.profileImage.sd_setImage(with: URL(string: self.recentlySearchedPictures[indexPath.row]), placeholderImage: nil, context: nil)
             //cell.profileImage.contentMode = .scaleAspectFill
             //self.makeRounded(picture: cell.profileImage)
@@ -195,6 +198,8 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
         return cell
     }
     
+
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         chosenUserID = usersID[indexPath.row]
         chosenUsername = usernames[indexPath.row]
